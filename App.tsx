@@ -5,7 +5,13 @@ import { assertDBNotNull, useGetDB } from './src/hooks/useGetDB';
 
 export default function App() {
   const db = useGetDB(asyncStorage, 'local-db');
-  assertDBNotNull(db);
+
+  // This assertion is stupid and wrong, but I was just experimenting
+  try {
+    assertDBNotNull(db);
+  } catch (error) {
+    return <Text>Error loading app</Text>;
+  }
 
   return (
     <View style={styles.container}>
