@@ -1,14 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { asyncStorage } from './src/async-storage/async-storage';
-import { useGetDB } from './src/hooks/useGetDB';
+import { assertDBNotNull, useGetDB } from './src/hooks/useGetDB';
 
 export default function App() {
   const db = useGetDB(asyncStorage, 'local-db');
+  assertDBNotNull(db);
 
   return (
     <View style={styles.container}>
-      <Text>{!!db ? 'some value' : 'null'}</Text>
+      <Text>{JSON.stringify(db)}</Text>
       <StatusBar style="auto" />
     </View>
   );

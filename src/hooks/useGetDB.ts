@@ -44,3 +44,9 @@ export const useGetDB: StorageCom<Storage> = (storage, storageKey) => {
 
   return db;
 };
+
+export function assertDBNotNull(db: DB | null): asserts db is DB {
+  if (db === null) {
+    throw new Error('DB is null');
+  }
+}
