@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { asyncReader } from './src/async-storage/async-storage';
+import { asyncStorage } from './src/async-storage/async-storage';
 import { useGetDB } from './src/hooks/useGetDB';
 
 export default function App() {
-  const db = useGetDB(asyncReader, 'local-db');
+  const db = useGetDB(asyncStorage, 'local-db');
 
   return (
     <View style={styles.container}>

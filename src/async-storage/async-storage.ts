@@ -1,5 +1,6 @@
-import { Readable } from '../model/db/db-communication';
+import { Storage } from '../model/db/db-communication';
 
-export const asyncReader: Readable = {
+export const asyncStorage: Storage = {
   getItem: async () => undefined,
+  setItem: async (key, value) => {},
 };

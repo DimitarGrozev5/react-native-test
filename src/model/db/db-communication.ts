@@ -16,5 +16,12 @@ export type StorageWriter<R extends Writable> = (
 ) => boolean;
 
 export interface Writable {
-  setItem: (key: string) => boolean;
+  setItem: (key: string, value: DB) => Promise<void>;
 }
+
+export type Storage = Readable & Writable;
+
+export type StorageCom<R extends Storage> = (
+  storage: R,
+  storageKey: string
+) => DB | null;

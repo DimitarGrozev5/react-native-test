@@ -8,6 +8,21 @@ export type DB = {
   goals: GoalsData;
   achieved: AchievedData;
 };
+export const emptyDB = (): DB => {
+  const t = new Date();
+  return {
+    activeSession: { startedAt: null },
+    goals: { currentDailyGoal: 0 },
+    achieved: {
+      today: {
+        date: [t.getDate(), t.getMonth(), t.getFullYear()],
+        achieved: 0,
+        goal: 0,
+      },
+      overall: [],
+    },
+  };
+};
 
 /**
  * Data for the active spine extension data
