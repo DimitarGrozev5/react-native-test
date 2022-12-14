@@ -21,7 +21,10 @@ export const useGetDB: StorageCom<Storage> = (storage, storageKey) => {
         const newDBFn = async (): Promise<DB | null> => {
           const newDB = emptyDB();
           try {
-            await storage.setItem(storageKey, newDB);
+            const result = await storage.setItem(storageKey, newDB);
+            if (!result) {
+              throw new Error('Writing to storage failed');
+            }
 
             return newDB;
           } catch (error) {
