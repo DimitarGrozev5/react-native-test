@@ -3,10 +3,10 @@ import { DB } from './db';
 export type StorageReader<R extends Readable> = (
   readable: R,
   storageKey: string
-) => JSON;
+) => DB | null;
 
 export interface Readable {
-  get: (key: string) => JSON;
+  getItem: (key: string) => Promise<string | undefined>;
 }
 
 export type StorageWriter<R extends Writable> = (
@@ -16,5 +16,5 @@ export type StorageWriter<R extends Writable> = (
 ) => boolean;
 
 export interface Writable {
-  set: (key: string) => JSON;
+  setItem: (key: string) => boolean;
 }
