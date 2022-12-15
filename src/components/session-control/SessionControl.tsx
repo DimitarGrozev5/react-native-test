@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import {
   startSessionThunk,
   stopSessionThunk,
-} from '../../store/db-slice/db-middleware';
+} from '../../store/db-slice/db-thunks';
 import {
   getActiveSession,
   getGoals,
