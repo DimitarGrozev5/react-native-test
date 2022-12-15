@@ -2,7 +2,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 
-import { startSessionThunk } from '../../store/db-slice/db-middleware';
+import {
+  startSessionThunk,
+  stopSessionThunk,
+} from '../../store/db-slice/db-middleware';
 import {
   getActiveSession,
   getGoals,
@@ -33,6 +36,8 @@ const SessionControl: React.FC<Props> = () => {
         const sess = rawToSession(activeSession, goals, today);
         setSessionState(sess);
       });
+    } else if (sessionState.active) {
+      setSessionState({ active: false });
     }
     return () => {
       cancelAnimationFrame(timer);
@@ -40,7 +45,9 @@ const SessionControl: React.FC<Props> = () => {
   }, [activeSession, activeSession.startedAt, goals, today, sessionState]);
 
   if (sessionState.active) {
-    const stopSessionHandler = () => {};
+    const stopSessionHandler = () => {
+      dispatch(stopSessionThunk());
+    };
     return (
       <ActiveSession
         today={today}

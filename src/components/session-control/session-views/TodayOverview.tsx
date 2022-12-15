@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Colors } from '../../../global-styling';
 import { DailyAchievement } from '../../../model/db/db';
@@ -11,12 +11,12 @@ type Props = React.PropsWithChildren & {
 
 const TodayOverview: React.FC<Props> = ({ children, today }) => {
   const spent = today.achieved;
-  const goal = today.achieved;
+  const goal = today.goal;
 
   return (
     <View style={styles.container}>
       <Text style={[styles.header, styles.centered]}>
-        <AccentText>What's happening today</AccentText>
+        <AccentText>What&apos;s happening today</AccentText>
       </Text>
       <Text style={[styles.centered]}>
         You have spent <AccentText>{formatTime(spent)}s</AccentText> in
