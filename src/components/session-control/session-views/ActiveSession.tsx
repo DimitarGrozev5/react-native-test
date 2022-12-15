@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
 import { DailyAchievement } from '../../../model/db/db';
 import { Seconds } from '../../../model/util-types';
+import { formatTime } from '../../../util/format-time';
 import StyledButton from '../../inputs/Button';
+import AccentText from '../../views/AccentText';
+import CenteredText from '../../views/CenteredText';
 import TodayOverview from './TodayOverview';
 
 type Props = {
@@ -21,6 +23,17 @@ const ActiveSession: React.FC<Props> = ({
   return (
     <TodayOverview today={today}>
       <StyledButton onPress={stopSessionHandler}>Stop Extension</StyledButton>
+      <CenteredText>
+        <AccentText>{formatTime(timeSoFar)}s</AccentText> in extension
+      </CenteredText>
+
+      {timeToGoal <= 0 ? (
+        <CenteredText>Daily Goal Achieved!</CenteredText>
+      ) : (
+        <CenteredText>
+          <AccentText>{formatTime(timeToGoal)}s</AccentText> to daily goal
+        </CenteredText>
+      )}
     </TodayOverview>
   );
 };

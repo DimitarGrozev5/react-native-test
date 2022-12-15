@@ -31,7 +31,7 @@ export const rawToSession = (
   }
 
   // Calculate time so far
-  const now = new Date().getTime();
+  const now = new Date().getTime() / 1000;
   const timeSoFar = now - activeSession.startedAt;
 
   // Calculate time to goal

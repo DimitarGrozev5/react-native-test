@@ -22,7 +22,7 @@ export const formatTime = (all: Seconds): string => {
   const m = Math.floor(secondsLeft / 60);
   secondsLeft -= m * 60;
 
-  const s = Math.floor(secondsLeft / 60 / 60);
+  const s = Math.floor(secondsLeft);
 
   const h_f = h <= 0 ? [] : leadingZeroes(h, 2);
   const m_f = h <= 0 && m <= 0 ? [] : leadingZeroes(m, 2);

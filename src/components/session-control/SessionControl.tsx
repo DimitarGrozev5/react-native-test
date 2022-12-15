@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
 import { startSessionThunk } from '../../store/db-slice/db-middleware';
 import {
   getActiveSession,
@@ -14,7 +15,7 @@ import InactiveSession from './session-views/InavtiveSession';
 
 type Props = {};
 
-const SessionControl: React.FC<Props> = ({}) => {
+const SessionControl: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
 
   const activeSession = useAppSelector(getActiveSession());
@@ -26,14 +27,17 @@ const SessionControl: React.FC<Props> = ({}) => {
   });
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: number;
     if (activeSession.startedAt !== null) {
-      timer = setTimeout(() => {
+      timer = requestAnimationFrame(() => {
         const sess = rawToSession(activeSession, goals, today);
         setSessionState(sess);
-      }, 50);
+      });
     }
-  }, [activeSession, goals, today]);
+    return () => {
+      cancelAnimationFrame(timer);
+    };
+  }, [activeSession, activeSession.startedAt, goals, today, sessionState]);
 
   if (sessionState.active) {
     const stopSessionHandler = () => {};
