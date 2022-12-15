@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text } from 'react-native';
+import { DailyAchievement } from '../../../model/db/db';
 import TodayOverview from './TodayOverview';
 
-type Props = {};
+type Props = { today: DailyAchievement };
 
-const InactiveSession: React.FC<Props> = ({}) => {
+const InactiveSession: React.FC<Props> = ({ today }) => {
   return (
-    <TodayOverview>
+    <TodayOverview today={today}>
       <Text>inactive view</Text>
     </TodayOverview>
   );

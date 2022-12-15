@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { Colors } from '../../../../App';
+import { DailyAchievement } from '../../../model/db/db';
+import AccentText from '../../views/AccentText';
 
-type Props = React.PropsWithChildren & {};
+type Props = React.PropsWithChildren & {
+  today: DailyAchievement;
+};
 
-const TodayOverview: React.FC<Props> = ({ children }) => {
+const TodayOverview: React.FC<Props> = ({ children, today }) => {
+  const spent = today.achieved;
+  const goal = today.achieved;
+
   return (
     <View style={styles.container}>
-      <Text style={[styles.header, styles.accentText, styles.centered]}>
-        What's happening today
+      <Text style={[styles.header, styles.centered]}>
+        <AccentText>What's happening today</AccentText>
       </Text>
       <Text style={[styles.centered]}>
-        You have spent <Text style={[styles.accentText]}>45min</Text> in
-        extension
+        You have spent <AccentText>{spent}min</AccentText> in extension
       </Text>
       <Text style={[styles.centered]}>
-        Your goal for today is <Text style={[styles.accentText]}>60min</Text>
+        Your goal for today is <AccentText>{goal}min</AccentText>
       </Text>
       {children}
     </View>
@@ -29,14 +36,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     margin: 8,
-    backgroundColor: '#f0c771',
+    backgroundColor: Colors.primary500,
     elevation: 8,
   },
   header: {
     fontSize: 18,
-  },
-  accentText: {
-    color: '#966803',
   },
   centered: {
     textAlign: 'center',

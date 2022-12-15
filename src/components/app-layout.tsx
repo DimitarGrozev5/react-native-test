@@ -2,6 +2,7 @@ import React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, View, StatusBar as SB } from 'react-native';
+import { Colors } from '../../App';
 
 type Props = React.PropsWithChildren & {};
 
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#f2d38f',
+    backgroundColor: Colors.primary300,
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 16,

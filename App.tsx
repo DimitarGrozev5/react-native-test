@@ -17,3 +17,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {},
 });
+
+export const Colors = {
+  primary300: '#f2d38f',
+  primary500: '#f0c771',
+  primary700: '#966803',
+};

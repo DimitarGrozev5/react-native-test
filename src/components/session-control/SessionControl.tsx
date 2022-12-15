@@ -25,7 +25,7 @@ const SessionControl: React.FC<Props> = ({}) => {
     return <Text>Test</Text>;
   }
 
-  return <InactiveSession />;
+  return <InactiveSession today={today} />;
 };
 
 export default SessionControl;
