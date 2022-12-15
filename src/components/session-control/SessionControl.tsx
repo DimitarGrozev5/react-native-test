@@ -7,6 +7,7 @@ import {
   getToday,
 } from '../../store/db-slice/db-selectors';
 import { useAppSelector } from '../../store/hooks';
+import InactiveSession from './session-views/InavtiveSession';
 import { SessionState } from './utils/raw-to-session';
 
 type Props = {};
@@ -20,7 +21,11 @@ const SessionControl: React.FC<Props> = ({}) => {
     active: false,
   });
 
-  return <Text>Test</Text>;
+  if (sessionState.active) {
+    return <Text>Test</Text>;
+  }
+
+  return <InactiveSession />;
 };
 
 export default SessionControl;

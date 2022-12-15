@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#f0c771',
+    backgroundColor: '#f2d38f',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    paddingHorizontal: 16,
   },
 });
