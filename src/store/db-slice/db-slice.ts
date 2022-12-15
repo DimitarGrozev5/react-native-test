@@ -1,10 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DB, emptyDB } from '../../model/db/db';
+import { UTCTimestamp } from '../../model/util-types';
 
 const dbSLice = createSlice({
   name: 'db',
   initialState: emptyDB,
-  reducers: {},
+  reducers: {
+    updateStartedAt: (state, action: PayloadAction<UTCTimestamp>) => {
+      state.activeSession.startedAt = action.payload;
+    },
+  },
 });
 
 export const dbReducer = dbSLice.reducer;

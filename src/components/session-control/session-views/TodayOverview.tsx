@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Colors } from '../../../../App';
+import { Colors } from '../../../global-styling';
 import { DailyAchievement } from '../../../model/db/db';
+import { formatTime } from '../../../util/format-time';
 import AccentText from '../../views/AccentText';
 
 type Props = React.PropsWithChildren & {
@@ -18,10 +19,11 @@ const TodayOverview: React.FC<Props> = ({ children, today }) => {
         <AccentText>What's happening today</AccentText>
       </Text>
       <Text style={[styles.centered]}>
-        You have spent <AccentText>{spent}min</AccentText> in extension
+        You have spent <AccentText>{formatTime(spent)}s</AccentText> in
+        extension
       </Text>
       <Text style={[styles.centered]}>
-        Your goal for today is <AccentText>{goal}min</AccentText>
+        Your goal for today is <AccentText>{formatTime(goal)}s</AccentText>
       </Text>
       {children}
     </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { Colors } from '../../../App';
+import { Colors } from '../../global-styling';
 
 type Props = React.PropsWithChildren;
 

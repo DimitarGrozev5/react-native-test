@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, View, StatusBar as SB } from 'react-native';
-import { Colors } from '../../App';
+import { Colors } from '../global-styling';
 
 type Props = React.PropsWithChildren & {};
 

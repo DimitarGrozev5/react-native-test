@@ -4,6 +4,7 @@ import { DateArray, Seconds, UTCTimestamp } from '../util-types';
  * Main DB type for storing data in the local storage
  */
 export type DB = {
+  dbVersion: 'v1';
   activeSession: ActiveSessionData;
   goals: GoalsData;
   achieved: AchievedData;
@@ -11,6 +12,7 @@ export type DB = {
 export const emptyDB = (): DB => {
   const t = new Date();
   return {
+    dbVersion: 'v1',
     activeSession: { startedAt: null },
     goals: { currentDailyGoal: 0 },
     achieved: {
