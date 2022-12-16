@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, View, StatusBar as SB } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar as SB } from 'react-native';
 import { Colors } from '../global-styling';
 
-type Props = React.PropsWithChildren & {};
+type Props = React.PropsWithChildren;
 
 const AppLayout: React.FC<Props> = ({ children }) => {
   return (
     <SafeAreaView style={[styles.container, { paddingTop: SB.currentHeight }]}>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       {children}
     </SafeAreaView>
   );
