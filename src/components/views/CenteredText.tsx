@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, TextStyle } from 'react-native';
 
-type Props = React.PropsWithChildren;
+type Props = React.PropsWithChildren & { style?: TextStyle | TextStyle[] };
 
-const CenteredText: React.FC<Props> = ({ children }) => {
-  return <Text style={[styles.centeredText]}>{children}</Text>;
+const CenteredText: React.FC<Props> = ({ children, style }) => {
+  return <Text style={[style, styles.centeredText]}>{children}</Text>;
 };
 
 export default CenteredText;
