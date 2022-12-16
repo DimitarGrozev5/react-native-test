@@ -14,7 +14,7 @@ const TodayOverview: React.FC<Props> = ({ children, today }) => {
   const goal = today.goal;
 
   return (
-    <Card header={<AccentText>What&apos;s happening today</AccentText>}>
+    <Card header="What's happening today" style={{ flex: 1 }}>
       <CenteredText>
         You have spent <AccentText>{formatTime(spent)}s</AccentText> in
         extension

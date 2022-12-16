@@ -1,4 +1,5 @@
 import { AnyAction, ThunkAction } from '@reduxjs/toolkit';
+import { Seconds } from '../../model/util-types';
 import { RootState } from '../store';
 import { dbActions } from './db-slice';
 
@@ -25,4 +26,13 @@ export const stopSessionThunk =
 
     dispatch(dbActions.updateStartedAt(null));
     dispatch(dbActions.addToDailyAchivement(totalSessionTime));
+  };
+
+export const updateGoalThunk =
+  (by: Seconds): ThunkAction<void, RootState, unknown, AnyAction> =>
+  (dispatch) => {
+    // TODO: Save to storage
+
+    dispatch(dbActions.updateDailyGoal(by));
+    dispatch(dbActions.updateGoal(by));
   };

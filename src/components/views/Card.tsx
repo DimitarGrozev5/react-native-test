@@ -1,18 +1,20 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import { Colors } from '../../global-styling';
+import AccentText from './AccentText';
 import CenteredText from './CenteredText';
 
 type Props = React.PropsWithChildren & {
-  header?: string | React.ReactElement;
+  header?: string;
+  style?: ViewStyle | ViewStyle[];
 };
 
-const Card: React.FC<Props> = ({ children, header }) => {
+const Card: React.FC<Props> = ({ children, header, style }) => {
   return (
-    <View style={styles.container}>
+    <View style={[style, styles.container]}>
       {!!header && (
         <CenteredText style={[styles.header, styles.centered]}>
-          {header}
+          <AccentText>{header}</AccentText>
         </CenteredText>
       )}
       {children}
@@ -30,6 +32,7 @@ const styles = StyleSheet.create({
     margin: 8,
     backgroundColor: Colors.primary500,
     elevation: 8,
+    justifyContent: 'center',
   },
   header: {
     fontSize: 18,

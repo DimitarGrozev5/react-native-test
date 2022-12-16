@@ -1,12 +1,16 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Colors } from '../../global-styling';
 
-type Props = { children: string; onPress: () => void };
+type Props = {
+  children: string;
+  onPress: () => void;
+  style?: ViewStyle | ViewStyle[];
+};
 
-const StyledButton: React.FC<Props> = ({ children, onPress }) => {
+const StyledButton: React.FC<Props> = ({ children, onPress, style }) => {
   return (
-    <View style={styles.container}>
+    <View style={[style, styles.container]}>
       <Pressable
         style={styles.pressable}
         onPress={onPress}

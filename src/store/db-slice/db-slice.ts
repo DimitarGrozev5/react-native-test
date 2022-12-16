@@ -9,9 +9,15 @@ const dbSLice = createSlice({
     updateStartedAt: (state, action: PayloadAction<UTCTimestamp | null>) => {
       state.activeSession.startedAt = action.payload;
     },
-
     addToDailyAchivement: (state, action: PayloadAction<Seconds>) => {
       state.achieved.today.achieved += action.payload;
+    },
+    updateDailyGoal: (state, action: PayloadAction<Seconds>) => {
+      state.achieved.today.goal = action.payload;
+    },
+
+    updateGoal: (state, action: PayloadAction<Seconds>) => {
+      state.goals.currentDailyGoal = action.payload;
     },
   },
 });
