@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { rawToSession, SessionState } from './helpers/raw-to-session';
 import ActiveSession from './session-views/ActiveSession';
 import InactiveSession from './session-views/InavtiveSession';
+import TodayOverview from './session-views/TodayOverview';
 
 type Props = {};
 
@@ -49,12 +50,13 @@ const SessionControl: React.FC<Props> = () => {
       dispatch(stopSessionThunk());
     };
     return (
-      <ActiveSession
-        today={today}
-        timeSoFar={sessionState.timeSoFar}
-        timeToGoal={sessionState.timeToGoal}
-        stopSessionHandler={stopSessionHandler}
-      />
+      <TodayOverview today={today}>
+        <ActiveSession
+          timeSoFar={sessionState.timeSoFar}
+          timeToGoal={sessionState.timeToGoal}
+          stopSessionHandler={stopSessionHandler}
+        />
+      </TodayOverview>
     );
   }
 
@@ -63,7 +65,9 @@ const SessionControl: React.FC<Props> = () => {
   };
 
   return (
-    <InactiveSession today={today} startSessionHandler={startSessionHandler} />
+    <TodayOverview today={today}>
+      <InactiveSession startSessionHandler={startSessionHandler} />
+    </TodayOverview>
   );
 };
 
