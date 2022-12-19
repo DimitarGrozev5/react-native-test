@@ -1,5 +1,7 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { ScreenNavigation } from '../../../App';
 import { Colors } from '../../global-styling';
 import { DailyAchievement } from '../../model/db/db';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
@@ -8,6 +10,8 @@ import Card from '../views/Card';
 import CenteredText from '../views/CenteredText';
 
 const DataOverview = () => {
+  const nav = useNavigation<ScreenNavigation>();
+
   const overallAchieved = useDBStore('achieved').overall;
 
   const last7days = useMemo(
@@ -45,18 +49,24 @@ const DataOverview = () => {
 
   return (
     <Card header="Previous Days" style={{ flex: 1 }}>
-      <CenteredText>
-        <AccentText>Last 7 Days</AccentText>
-      </CenteredText>
-      <View style={styles.graphContainer}>
-        {scaled7days.map((day) => (
-          <DataBar
-            key={day.date.join(',')}
-            goal={day.goal}
-            achieved={day.achieved}
-          />
-        ))}
-      </View>
+      <Pressable
+        style={styles.pressable}
+        onPress={() => nav.navigate('History')}
+        android_ripple={{ color: Colors.primary300 }}
+      >
+        <CenteredText>
+          <AccentText>Last 7 Days</AccentText>
+        </CenteredText>
+        <View style={styles.graphContainer}>
+          {scaled7days.map((day) => (
+            <DataBar
+              key={day.date.join(',')}
+              goal={day.goal}
+              achieved={day.achieved}
+            />
+          ))}
+        </View>
+      </Pressable>
     </Card>
   );
 };
@@ -111,5 +121,8 @@ const styles = StyleSheet.create({
   achievedBar: {
     borderColor: Colors.primary700,
     backgroundColor: Colors.primary300,
+  },
+  pressable: {
+    flex: 1,
   },
 });
