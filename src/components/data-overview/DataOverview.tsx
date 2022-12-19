@@ -2,16 +2,26 @@ import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Colors } from '../../global-styling';
 import { DailyAchievement } from '../../model/db/db';
-import { getLastDays } from '../../store/db-slice/db-selectors';
-import { useAppSelector } from '../../store/hooks';
+import { useDBStore } from '../../store-mobx/db/useDBStore';
 import AccentText from '../views/AccentText';
 import Card from '../views/Card';
 import CenteredText from '../views/CenteredText';
 
 const DataOverview = () => {
-  // Get last 7 days
-  const last7days = useAppSelector(getLastDays).slice(-7);
-  console.log(last7days);
+  const overallAchieved = useDBStore('achieved').overall;
+
+  const last7days = useMemo(
+    () =>
+      [...overallAchieved]
+        .sort((a, b) => {
+          const aUTC = new Date(a.date[2], a.date[1], a.date[0]).getTime();
+          const bUTC = new Date(b.date[2], b.date[1], b.date[0]).getTime();
+
+          return aUTC - bUTC;
+        })
+        .slice(-7),
+    [overallAchieved]
+  );
 
   // Calcualate relative values
   const max = useMemo(
