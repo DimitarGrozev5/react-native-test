@@ -8,6 +8,7 @@ import {
 import StoreProvider from './src/store-mobx/storeContext';
 import HomeScreen from './src/views/home-screen';
 import History from './src/views/history';
+import { Colors } from './src/global-styling';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +16,14 @@ export default function App() {
   return (
     <StoreProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primary600,
+            },
+            headerTintColor: Colors.primary300,
+          }}
+        >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="History" component={History} />
         </Stack.Navigator>
