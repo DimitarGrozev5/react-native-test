@@ -76,6 +76,8 @@ export type AchievedProps = AchievedData & {
   today: DailyAchievementProps;
   setToday: (today: DailyAchievement) => void;
   addToAchievedDays: (newDaily: DailyAchievement) => void;
+  last7days: DailyAchievement[];
+  overallSortedByDateDsd: DailyAchievement[];
 };
 export function createDBAchievedStore(achieved: AchievedData): AchievedProps {
   const store = {
@@ -131,6 +133,24 @@ export function createDBAchievedStore(achieved: AchievedData): AchievedProps {
     _overall: observable.box<DailyAchievement[]>(achieved.overall),
     get overall() {
       return store._overall.get();
+    },
+    get last7days() {
+      return [...store._overall.get()]
+        .sort((a, b) => {
+          const aUTC = new Date(a.date[2], a.date[1], a.date[0]).getTime();
+          const bUTC = new Date(b.date[2], b.date[1], b.date[0]).getTime();
+
+          return aUTC - bUTC;
+        })
+        .slice(-7);
+    },
+    get overallSortedByDateDsd() {
+      return [...store._overall.get()].sort((a, b) => {
+        const aUTC = new Date(a.date[2], a.date[1], a.date[0]).getTime();
+        const bUTC = new Date(b.date[2], b.date[1], b.date[0]).getTime();
+
+        return bUTC - aUTC;
+      });
     },
     addToAchievedDays(newDaily: DailyAchievement) {
       store._overall.set([...store.overall, newDaily]);
