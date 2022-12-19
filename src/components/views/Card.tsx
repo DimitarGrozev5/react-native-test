@@ -17,7 +17,7 @@ const Card: React.FC<Props> = ({ children, header, style }) => {
           <AccentText>{header}</AccentText>
         </CenteredText>
       )}
-      {children}
+      <View style={styles.content}>{children}</View>
     </View>
   );
 };
@@ -40,4 +40,5 @@ const styles = StyleSheet.create({
   centered: {
     textAlign: 'center',
   },
+  content: { flex: 1, justifyContent: 'center' },
 });
