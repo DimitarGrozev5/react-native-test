@@ -1,9 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Seconds } from '../../model/util-types';
-import { getGoals } from '../../store/db-slice/db-selectors';
-import { updateGoalThunk } from '../../store/db-slice/db-thunks';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useDBStore } from '../../store-mobx/db/useDBStore';
 import { formatTime } from '../../util/format-time';
 import StyledButton from '../inputs/Button';
 import AccentText from '../views/AccentText';
@@ -11,9 +10,8 @@ import Card from '../views/Card';
 import CenteredText from '../views/CenteredText';
 
 const GoalControl = () => {
-  const dispatch = useAppDispatch();
-
-  const goals = useAppSelector(getGoals());
+  const goals = useDBStore('goals');
+  const { setGoal } = useDBStore('achieved').today;
 
   const [viewMode, setViewMode] = useState<'view' | 'edit'>('view');
 
@@ -23,7 +21,8 @@ const GoalControl = () => {
   };
 
   const handleSave = () => {
-    dispatch(updateGoalThunk(newGoal));
+    goals.setCurrentDailyGoal(newGoal);
+    setGoal(newGoal);
     setViewMode('view');
   };
 
@@ -93,7 +92,7 @@ const GoalControl = () => {
   );
 };
 
-export default GoalControl;
+export default observer(GoalControl);
 
 const styles = StyleSheet.create({
   controlContainer: {
