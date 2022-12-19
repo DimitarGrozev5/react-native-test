@@ -2,29 +2,17 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 
-import {
-  startSessionThunk,
-  stopSessionThunk,
-} from '../../store/db-slice/db-thunks';
-import {
-  getActiveSession,
-  getGoals,
-  getToday,
-} from '../../store/db-slice/db-selectors';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { rawToSession, SessionState } from './helpers/raw-to-session';
 import ActiveSession from './session-views/ActiveSession';
 import InactiveSession from './session-views/InavtiveSession';
 import TodayOverview from './session-views/TodayOverview';
+import { useDBStore } from '../../store-mobx/db/useDBStore';
+import { observer } from 'mobx-react-lite';
 
-type Props = {};
-
-const SessionControl: React.FC<Props> = () => {
-  const dispatch = useAppDispatch();
-
-  const activeSession = useAppSelector(getActiveSession());
-  const goals = useAppSelector(getGoals());
-  const today = useAppSelector(getToday());
+const SessionControl = observer(() => {
+  const activeSession = useDBStore('activeSession');
+  const goals = useDBStore('goals');
+  const today = useDBStore('achieved').today;
 
   const [sessionState, setSessionState] = useState<SessionState>({
     active: false,
@@ -47,7 +35,12 @@ const SessionControl: React.FC<Props> = () => {
 
   if (sessionState.active) {
     const stopSessionHandler = () => {
-      dispatch(stopSessionThunk());
+      const now = new Date().getTime() / 1000;
+      const startTime = activeSession.startedAt || now;
+      const totalSessionTime = now - startTime;
+
+      activeSession.setStartedAt(null);
+      today.addToAchieved(totalSessionTime);
     };
     return (
       <TodayOverview today={today}>
@@ -61,7 +54,8 @@ const SessionControl: React.FC<Props> = () => {
   }
 
   const startSessionHandler = () => {
-    dispatch(startSessionThunk());
+    const now = new Date().getTime() / 1000;
+    activeSession.setStartedAt(now);
   };
 
   return (
@@ -69,6 +63,6 @@ const SessionControl: React.FC<Props> = () => {
       <InactiveSession startSessionHandler={startSessionHandler} />
     </TodayOverview>
   );
-};
+});
 
 export default SessionControl;
