@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     flex: 5,
   },
   dataBar: {
-    borderColor: 'black',
     borderWidth: 1,
   },
   goalStyle: {
