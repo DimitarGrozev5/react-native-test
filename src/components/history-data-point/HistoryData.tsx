@@ -77,7 +77,5 @@ export default observer(HistoryData);
 const styles = StyleSheet.create({
   horizontalList: {
     flex: 1,
-    // borderWidth: 1,
-    // borderColor: 'black',
   },
 });
