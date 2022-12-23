@@ -1,16 +1,22 @@
 import React from 'react';
 import DoubleActionButton from '../../inputs/DoubleActionButton';
 
-type Props = { startSessionHandler: () => void };
+type Props = {
+  startSessionHandler: () => void;
+  startWithGesturesHandler: () => void;
+};
 
-const InactiveSession: React.FC<Props> = ({ startSessionHandler }) => {
+const InactiveSession: React.FC<Props> = ({
+  startSessionHandler,
+  startWithGesturesHandler,
+}) => {
   return (
     <>
       <DoubleActionButton
-        onPress1={startSessionHandler}
-        onPress2={startSessionHandler}
+        onPressBoth={startWithGesturesHandler}
+        onPressInner={startSessionHandler}
         text1="Start Extension"
-        text2="(With gestures)"
+        text2="(with auto stop)"
       />
     </>
   );

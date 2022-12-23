@@ -5,28 +5,28 @@ import { Colors } from '../../global-styling';
 type Props = {
   text1: string;
   text2: string;
-  onPress1: () => void;
-  onPress2: () => void;
+  onPressBoth: () => void;
+  onPressInner: () => void;
   style?: ViewStyle | ViewStyle[];
 };
 
 const DoubleActionButton: React.FC<Props> = ({
   text1,
   text2,
-  onPress1,
-  onPress2,
+  onPressBoth,
+  onPressInner,
   style,
 }) => {
   return (
     <View style={[style, styles.container]}>
       <Pressable
         style={[styles.pressable]}
-        onPress={onPress2}
+        onPress={onPressBoth}
         android_ripple={{ color: Colors.primary700 }}
       >
         <Pressable
           style={styles.leftButton}
-          onPress={onPress1}
+          onPress={onPressInner}
           android_ripple={{ color: Colors.primary700 }}
         >
           <Text style={[styles.textLeft]}>{text1}</Text>

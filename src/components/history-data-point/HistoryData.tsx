@@ -38,7 +38,6 @@ const HistoryData = () => {
     () =>
       [...sortedHistoryData].reverse().flatMap((pt) => {
         const date = new Date(pt.date[2], pt.date[1] - 1, pt.date[0]);
-        console.log(date);
 
         if (date.getDay() === 1) {
           return [

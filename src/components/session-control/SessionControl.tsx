@@ -9,6 +9,9 @@ import TodayOverview from './session-views/TodayOverview';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import { observer } from 'mobx-react-lite';
 import { Seconds } from '../../model/util-types';
+import { useOrientation } from './session-views/useOrientation';
+import CenteredText from '../views/CenteredText';
+import AccentText from '../views/AccentText';
 
 const SessionControl = observer(() => {
   const activeSession = useDBStore('activeSession');
@@ -18,6 +21,11 @@ const SessionControl = observer(() => {
   const [sessionState, setSessionState] = useState<SessionState>({
     active: false,
   });
+
+  const [requestedAutoStart, setRequestedAutoStart] = useState(false);
+  const [startedAutoStart, setStartedAutoStart] = useState(false);
+
+  const downOrUp = useOrientation();
 
   useEffect(() => {
     let timer: number;
@@ -50,6 +58,37 @@ const SessionControl = observer(() => {
     },
     [activeSession, today]
   );
+
+  const startSessionHandler = useCallback(() => {
+    const now = new Date().getTime() / 1000;
+    activeSession.setStartedAt(now);
+  }, [activeSession]);
+
+  const startWithGesturesHandler = () => {
+    setRequestedAutoStart(true);
+  };
+
+  // Handle device orientation for auto start and stop
+  useEffect(() => {
+    if (requestedAutoStart) {
+      if (downOrUp === 'down' && !startedAutoStart) {
+        startSessionHandler();
+        setStartedAutoStart(true);
+      }
+      if (downOrUp === 'up' && startedAutoStart) {
+        stopSessionHandler();
+        setRequestedAutoStart(false);
+        setStartedAutoStart(false);
+      }
+    }
+  }, [
+    downOrUp,
+    requestedAutoStart,
+    startSessionHandler,
+    startedAutoStart,
+    stopSessionHandler,
+  ]);
+
   if (sessionState.active) {
     return (
       <TodayOverview today={today}>
@@ -59,18 +98,28 @@ const SessionControl = observer(() => {
           stopSessionHandler={stopSessionHandler}
           wrongTimeHandler={wrongTimeHandler}
         />
+
+        {requestedAutoStart && startedAutoStart && (
+          <CenteredText>
+            <AccentText>Pick up the phone to stop the timer</AccentText>
+          </CenteredText>
+        )}
       </TodayOverview>
     );
   }
 
-  const startSessionHandler = () => {
-    const now = new Date().getTime() / 1000;
-    activeSession.setStartedAt(now);
-  };
-
   return (
     <TodayOverview today={today}>
-      <InactiveSession startSessionHandler={startSessionHandler} />
+      <InactiveSession
+        startSessionHandler={startSessionHandler}
+        startWithGesturesHandler={startWithGesturesHandler}
+      />
+      
+      {requestedAutoStart && !startedAutoStart && (
+          <CenteredText>
+            <AccentText>Put the phone down to start the timer</AccentText>
+          </CenteredText>
+        )}
     </TodayOverview>
   );
 });
