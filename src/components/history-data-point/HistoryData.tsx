@@ -17,8 +17,8 @@ const HistoryData = () => {
   const sortedHistoryData = useMemo(
     () =>
       [...historyData].sort((a, b) => {
-        const aUTC = new Date(a.date[2], a.date[1], a.date[0]).getTime();
-        const bUTC = new Date(b.date[2], b.date[1], b.date[0]).getTime();
+        const aUTC = new Date(a.date[2], a.date[1] - 1, a.date[0]).getTime();
+        const bUTC = new Date(b.date[2], b.date[1] - 1, b.date[0]).getTime();
 
         return bUTC - aUTC;
       }),
@@ -37,8 +37,10 @@ const HistoryData = () => {
   const dataForVertical: VerticalData[] = useMemo(
     () =>
       [...sortedHistoryData].reverse().flatMap((pt) => {
-        const date = new Date(pt.date[2], pt.date[1], pt.date[0]);
-        if (date.getDay() === 0) {
+        const date = new Date(pt.date[2], pt.date[1] - 1, pt.date[0]);
+        console.log(date);
+
+        if (date.getDay() === 1) {
           return [
             { type: 'date', data: pt.date.join('.') },
             { type: 'achivement', data: pt },

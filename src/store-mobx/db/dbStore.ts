@@ -137,8 +137,8 @@ export function createDBAchievedStore(achieved: AchievedData): AchievedProps {
     get last7days() {
       return [...store._overall.get()]
         .sort((a, b) => {
-          const aUTC = new Date(a.date[2], a.date[1], a.date[0]).getTime();
-          const bUTC = new Date(b.date[2], b.date[1], b.date[0]).getTime();
+          const aUTC = new Date(a.date[2], a.date[1] - 1, a.date[0]).getTime();
+          const bUTC = new Date(b.date[2], b.date[1] - 1, b.date[0]).getTime();
 
           return aUTC - bUTC;
         })
@@ -146,8 +146,8 @@ export function createDBAchievedStore(achieved: AchievedData): AchievedProps {
     },
     get overallSortedByDateDsd() {
       return [...store._overall.get()].sort((a, b) => {
-        const aUTC = new Date(a.date[2], a.date[1], a.date[0]).getTime();
-        const bUTC = new Date(b.date[2], b.date[1], b.date[0]).getTime();
+        const aUTC = new Date(a.date[2], a.date[1] - 1, a.date[0]).getTime();
+        const bUTC = new Date(b.date[2], b.date[1] - 1, b.date[0]).getTime();
 
         return bUTC - aUTC;
       });
