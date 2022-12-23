@@ -42,12 +42,16 @@ const SessionControl = observer(() => {
       activeSession.setStartedAt(null);
       today.addToAchieved(totalSessionTime);
     };
+
+    const wrongTimeHandler = () => {};
+
     return (
       <TodayOverview today={today}>
         <ActiveSession
           timeSoFar={sessionState.timeSoFar}
           timeToGoal={sessionState.timeToGoal}
           stopSessionHandler={stopSessionHandler}
+          wrongTimeHandler={wrongTimeHandler}
         />
       </TodayOverview>
     );

@@ -9,12 +9,14 @@ type Props = {
   timeSoFar: Seconds;
   timeToGoal: Seconds;
   stopSessionHandler: () => void;
+  wrongTimeHandler: () => void;
 };
 
 const ActiveSession: React.FC<Props> = ({
   timeSoFar,
   timeToGoal,
   stopSessionHandler,
+  wrongTimeHandler,
 }) => {
   return (
     <>
@@ -30,6 +32,9 @@ const ActiveSession: React.FC<Props> = ({
           <AccentText>{formatTime(timeToGoal)}s</AccentText> to daily goal
         </CenteredText>
       )}
+      <StyledButton onPress={wrongTimeHandler} plain>
+        Wrong time?
+      </StyledButton>
     </>
   );
 };
