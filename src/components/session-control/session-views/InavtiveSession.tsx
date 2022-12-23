@@ -1,11 +1,18 @@
 import React from 'react';
-import StyledButton from '../../inputs/Button';
+import DoubleActionButton from '../../inputs/DoubleActionButton';
 
 type Props = { startSessionHandler: () => void };
 
 const InactiveSession: React.FC<Props> = ({ startSessionHandler }) => {
   return (
-    <StyledButton onPress={startSessionHandler}>Start Extension</StyledButton>
+    <>
+      <DoubleActionButton
+        onPress1={startSessionHandler}
+        onPress2={startSessionHandler}
+        text1="Start Extension"
+        text2="(With gestures)"
+      />
+    </>
   );
 };
 
