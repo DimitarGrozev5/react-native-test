@@ -9,7 +9,7 @@ type Props = React.PropsWithChildren & {
   style?: ViewStyle | ViewStyle[];
 };
 
-const Card: React.FC<Props> = ({ children, header, style }) => {
+const Card: React.FC<Props> = ({ children, header, style = {} }) => {
   return (
     <View style={[style, styles.container]}>
       {!!header && (

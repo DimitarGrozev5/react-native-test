@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   plainContainer: {
+    borderRadius: 0,
     margin: 0,
   },
   plainPressable: {
