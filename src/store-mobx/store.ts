@@ -1,4 +1,3 @@
-import { autorun } from 'mobx';
 import { emptyDB } from '../model/db/db';
 import {
   createDBAchievedStore,
@@ -22,9 +21,6 @@ export function createStore(): StoreProps {
     goals,
     achieved,
   };
-  autorun(() => {
-    console.log(dbStore);
-  });
 
   return {
     db: dbStore,

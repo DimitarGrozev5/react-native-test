@@ -27,7 +27,7 @@ import { DateArray, Seconds, UTCTimestamp } from '../../model/util-types';
 
 export type DBStore = {
   dbVersion: 'v1';
-  
+
   activeSession: ActiveSessionProps;
   goals: GoalsProps;
   achieved: AchievedProps;
@@ -77,6 +77,7 @@ export type AchievedProps = AchievedData & {
   today: DailyAchievementProps;
   setToday: (today: DailyAchievement) => void;
   addToAchievedDays: (newDaily: DailyAchievement) => void;
+  setOverall: (newDaily: DailyAchievement[]) => void;
   last7days: DailyAchievement[];
   overallSortedByDateDsd: DailyAchievement[];
 };
@@ -155,6 +156,9 @@ export function createDBAchievedStore(achieved: AchievedData): AchievedProps {
     },
     addToAchievedDays(newDaily: DailyAchievement) {
       store._overall.set([...store.overall, newDaily]);
+    },
+    setOverall(all: DailyAchievement[]) {
+      store._overall.set([...all]);
     },
   };
   return store;
