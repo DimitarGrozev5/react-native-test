@@ -27,6 +27,7 @@ import { DateArray, Seconds, UTCTimestamp } from '../../model/util-types';
 
 export type DBStore = {
   dbVersion: 'v1';
+  
   activeSession: ActiveSessionProps;
   goals: GoalsProps;
   achieved: AchievedProps;

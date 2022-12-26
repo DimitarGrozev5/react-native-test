@@ -5,6 +5,7 @@ import { DateArray, Seconds, UTCTimestamp } from '../util-types';
  */
 export type DB = {
   dbVersion: 'v1';
+  lastChange: UTCTimestamp;
   activeSession: ActiveSessionData;
   goals: GoalsData;
   achieved: AchievedData;
@@ -13,6 +14,7 @@ export const emptyDB = (): DB => {
   const t = new Date();
   return {
     dbVersion: 'v1',
+    lastChange: t.getTime(),
     activeSession: { startedAt: null },
     goals: { currentDailyGoal: 0 },
     achieved: {
