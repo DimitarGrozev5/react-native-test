@@ -11,6 +11,7 @@ import StoreProvider from './src/store-mobx/storeContext';
 import HomeScreen from './src/views/home-screen';
 import History from './src/views/history';
 import { Colors } from './src/global-styling';
+import RegisterScreen from './src/views/register';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,7 +50,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name="Register"
-        component={HomeScreen}
+        component={RegisterScreen}
         options={{
           drawerIcon: ({ color, size }) => (
             <MaterialIcons name="app-registration" color={color} size={size} />

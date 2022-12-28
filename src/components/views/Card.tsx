@@ -11,7 +11,7 @@ type Props = React.PropsWithChildren & {
 
 const Card: React.FC<Props> = ({ children, header, style = {} }) => {
   return (
-    <View style={[style, styles.container]}>
+    <View style={[styles.container, style]}>
       {!!header && (
         <CenteredText style={[styles.header, styles.centered]}>
           <AccentText>{header}</AccentText>
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary500,
     elevation: 8,
     justifyContent: 'center',
+    flex: 1,
   },
   header: {
     fontSize: 18,

@@ -1,3 +1,4 @@
+import React from 'react';
 import AppLayout from '../components/app-layout';
 import DataOverview from '../components/data-overview/DataOverview';
 import GoalControl from '../components/goal-control/GoalControl';

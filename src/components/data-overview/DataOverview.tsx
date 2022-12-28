@@ -36,7 +36,7 @@ const DataOverview = () => {
   );
 
   return (
-    <Card header="Previous Days" style={{ flex: 1 }}>
+    <Card header="Previous Days">
       <Pressable
         style={styles.pressable}
         onPress={() => nav.navigate('History')}
