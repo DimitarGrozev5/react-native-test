@@ -6,7 +6,13 @@ import CenteredText from '../components/views/CenteredText';
 const RegisterScreen = () => {
   return (
     <AppLayout>
-      <Card header='jdjdh'>
+      <Card>
+        <CenteredText>
+          Register an account to be able to backup and restore your data and to
+          be able to sync other devices
+        </CenteredText>
+      </Card>
+      <Card style={{ flex: 3 }}>
         <CenteredText>
           Register an account to be able to backup and restore your data and to
           be able to sync other devices

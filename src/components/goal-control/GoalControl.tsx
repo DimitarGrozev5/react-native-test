@@ -27,7 +27,7 @@ const GoalControl = () => {
   };
 
   return (
-    <Card header="Managing your goals">
+    <Card header="Managing your goals" expand>
       <CenteredText>
         Your current goal is{' '}
         <AccentText>{formatTime(goals.currentDailyGoal)}s</AccentText>
