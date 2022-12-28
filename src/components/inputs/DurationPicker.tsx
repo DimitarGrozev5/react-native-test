@@ -11,6 +11,7 @@ import { Seconds } from '../../model/util-types';
 import { getHMS } from '../../util/getHMS';
 import { leadingZeroes } from '../../util/leading-zeroes';
 import AccentText from '../views/AccentText';
+import ControllableTextInput from './ControllableTextInput';
 
 type Props = {
   value: Seconds;
@@ -62,7 +63,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <View style={styles.inputBox}>
-          <TextInput
+          <ControllableTextInput
             value={h}
             onChange={handleChange(setH)}
             onBlur={blurHandler}
@@ -85,7 +86,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
           />
         </View>
         <View>
-          <AccentText>mm</AccentText>
+          <AccentText>m</AccentText>
         </View>
       </View>
       <View style={styles.inputContainer}>
@@ -99,7 +100,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
           />
         </View>
         <View>
-          <AccentText>ss</AccentText>
+          <AccentText>s</AccentText>
         </View>
       </View>
     </View>
