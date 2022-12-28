@@ -4,6 +4,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import StoreProvider from './src/store-mobx/storeContext';
 import HomeScreen from './src/views/home-screen';
@@ -11,12 +12,24 @@ import History from './src/views/history';
 import { Colors } from './src/global-styling';
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <StoreProvider>
       <NavigationContainer>
-        <Stack.Navigator
+        <Drawer.Navigator
+          // screenOptions={{
+          //   headerStyle: {
+          //     backgroundColor: Colors.primary600,
+          //   },
+          //   headerTintColor: Colors.primary300,
+          // }}
+        >
+          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="History" component={History} />
+        </Drawer.Navigator>
+        {/* <Stack.Navigator
           screenOptions={{
             headerStyle: {
               backgroundColor: Colors.primary600,
@@ -26,7 +39,7 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="History" component={History} />
-        </Stack.Navigator>
+        </Stack.Navigator> */}
       </NavigationContainer>
     </StoreProvider>
   );
