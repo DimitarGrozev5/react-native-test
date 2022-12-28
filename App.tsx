@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-  createNativeStackNavigator,
   NativeStackScreenProps,
+  createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 import StoreProvider from './src/store-mobx/storeContext';
 import HomeScreen from './src/views/home-screen';
@@ -14,22 +15,65 @@ import { Colors } from './src/global-styling';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors.primary600,
+        },
+        headerTintColor: Colors.primary300,
+        drawerActiveBackgroundColor: Colors.primary500,
+        drawerActiveTintColor: Colors.primary700,
+        drawerStyle: { backgroundColor: Colors.primary300 },
+        drawerLabelStyle: { color: Colors.primary700 },
+      }}
+    >
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Login"
+        component={HomeScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="log-in" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Register"
+        component={HomeScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialIcons name="app-registration" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Logout"
+        component={HomeScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="log-out" color={color} size={size} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
+
 export default function App() {
   return (
     <StoreProvider>
       <NavigationContainer>
-        <Drawer.Navigator
-          // screenOptions={{
-          //   headerStyle: {
-          //     backgroundColor: Colors.primary600,
-          //   },
-          //   headerTintColor: Colors.primary300,
-          // }}
-        >
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          <Drawer.Screen name="History" component={History} />
-        </Drawer.Navigator>
-        {/* <Stack.Navigator
+        <Stack.Navigator
           screenOptions={{
             headerStyle: {
               backgroundColor: Colors.primary600,
@@ -37,9 +81,13 @@ export default function App() {
             headerTintColor: Colors.primary300,
           }}
         >
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="HomeDrawer"
+            component={DrawerNavigator}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen name="History" component={History} />
-        </Stack.Navigator> */}
+        </Stack.Navigator>
       </NavigationContainer>
     </StoreProvider>
   );
