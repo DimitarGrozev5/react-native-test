@@ -63,7 +63,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <View style={styles.inputBox}>
-          <ControllableTextInput
+          <TextInput
             value={h}
             onChange={handleChange(setH)}
             onBlur={blurHandler}
@@ -77,7 +77,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputBox}>
-          <TextInput
+          <ControllableTextInput
             value={m}
             onChange={handleChange(setM)}
             onBlur={blurHandler}
@@ -91,7 +91,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputBox}>
-          <TextInput
+          <ControllableTextInput
             value={s}
             onChange={handleChange(setS)}
             onBlur={blurHandler}
