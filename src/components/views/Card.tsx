@@ -8,6 +8,7 @@ type Props = React.PropsWithChildren & {
   header?: string;
   style?: ViewStyle | ViewStyle[];
   expand?: boolean;
+  centered?: boolean;
 };
 
 const Card: React.FC<Props> = ({
@@ -15,9 +16,17 @@ const Card: React.FC<Props> = ({
   header,
   style = {},
   expand = false,
+  centered = true,
 }) => {
   return (
-    <View style={[styles.container, expand ? styles.expand : {}, style]}>
+    <View
+      style={[
+        styles.container,
+        expand ? styles.expand : {},
+        centered ? styles.centeredContent : {},
+        style,
+      ]}
+    >
       {!!header && (
         <CenteredText style={[styles.header, styles.centered]}>
           <AccentText>{header}</AccentText>
@@ -31,7 +40,6 @@ const Card: React.FC<Props> = ({
 export default Card;
 
 const styles = StyleSheet.create({
-  expand: { flex: 1 },
   container: {
     width: '100%',
     paddingHorizontal: 16,
@@ -39,8 +47,9 @@ const styles = StyleSheet.create({
     margin: 8,
     backgroundColor: Colors.primary500,
     elevation: 8,
-    justifyContent: 'center',
   },
+  expand: { flex: 1 },
+  centeredContent: { justifyContent: 'center' },
   header: {
     fontSize: 18,
   },
