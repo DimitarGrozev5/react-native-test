@@ -38,20 +38,54 @@ const RegisterScreen = () => {
         </CenteredText>
       </Card>
       <Card header="Please input your data" expand centered={false}>
-        <ControlledInput control={control} name="email" errors={errors.email} />
+        <ControlledInput
+          control={control}
+          name="email"
+          label="Email"
+          placeholder="email@domain.com"
+          rules={{
+            required: 'Email is required',
+            pattern: {
+              message: 'Please enter a valid email',
+              value: /.+@.+\..+/,
+            },
+          }}
+          errors={errors.email}
+        />
         <ControlledInput
           control={control}
           name="repeatEmail"
+          label="Repeat Email"
+          placeholder="email@domain.com"
+          rules={{
+            required: 'Email is required',
+            pattern: {
+              message: 'Please enter a valid email',
+              value: /.+@.+\..+/,
+            },
+          }}
           errors={errors.repeatEmail}
         />
         <ControlledInput
           control={control}
           name="password"
+          label="Password"
+          rules={{
+            required: 'Please enter a password',
+            minLength: { value: 6, message: 'Password is too short' },
+          }}
+          hidden
           errors={errors.password}
         />
         <ControlledInput
           control={control}
           name="repeatPassword"
+          label="Repeat Password"
+          rules={{
+            required: 'Please enter a password',
+            minLength: { value: 6, message: 'Password is too short' },
+          }}
+          hidden
           errors={errors.repeatPassword}
         />
         <StyledButton onPress={handleSubmit(onSubmit)}>Submit</StyledButton>
