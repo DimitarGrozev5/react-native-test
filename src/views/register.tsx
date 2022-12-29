@@ -18,6 +18,7 @@ const RegisterScreen = () => {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<FormData>({
     defaultValues: {
       email: '',
@@ -63,6 +64,11 @@ const RegisterScreen = () => {
               message: 'Please enter a valid email',
               value: /.+@.+\..+/,
             },
+            validate: (val: string) => {
+              if (watch('email') !== val) {
+                return "Emails don't match";
+              }
+            },
           }}
           errors={errors.repeatEmail}
         />
@@ -84,6 +90,11 @@ const RegisterScreen = () => {
           rules={{
             required: 'Please enter a password',
             minLength: { value: 6, message: 'Password is too short' },
+            validate: (val: string) => {
+              if (watch('password') !== val) {
+                return "Passwords don't match";
+              }
+            },
           }}
           hidden
           errors={errors.repeatPassword}
