@@ -38,7 +38,7 @@ const RegisterScreen = () => {
           be able to sync other devices
         </CenteredText>
       </Card>
-      <Card header="Please input your data" expand centered={false}>
+      <Card header="Please input your data" centered={false}>
         <ControlledInput
           control={control}
           name="email"
