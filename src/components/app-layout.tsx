@@ -22,8 +22,6 @@ export default AppLayout;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    borderWidth: 3,
-    borderColor: 'red',
   },
   container: {
     backgroundColor: Colors.primary300,
