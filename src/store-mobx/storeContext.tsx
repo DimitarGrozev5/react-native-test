@@ -1,9 +1,8 @@
+import React, { createContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { autorun } from 'mobx';
 import { useLocalObservable } from 'mobx-react-lite';
 
-import type { PropsWithChildren } from 'react';
-import { createContext } from 'react';
 import { DB } from '../model/db/db';
 import { dbStoreToData } from './db/store-to-db';
 import { TStore } from './store';
@@ -11,7 +10,9 @@ import { createStore } from './store';
 
 export const storeContext = createContext<TStore | null>(null);
 
-export function StoreProvider({ children }: PropsWithChildren): JSX.Element {
+export function StoreProvider({
+  children,
+}: React.PropsWithChildren): JSX.Element {
   const store = useLocalObservable(createStore);
 
   // Get data from local storage

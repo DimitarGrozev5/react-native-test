@@ -69,6 +69,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
             onBlur={blurHandler}
             style={styles.textInput}
             cursorColor={Colors.primary700}
+            keyboardType="numeric"
           />
         </View>
         <View>

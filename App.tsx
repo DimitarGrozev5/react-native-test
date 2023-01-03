@@ -12,6 +12,7 @@ import HomeScreen from './src/views/home-screen';
 import History from './src/views/history';
 import { Colors } from './src/global-styling';
 import RegisterScreen from './src/views/register';
+import ViewScreen from './src/views/view-screen';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,6 +34,15 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="QReader"
+        component={ViewScreen}
         options={{
           drawerIcon: ({ color, size }) => (
             <Ionicons name="home" color={color} size={size} />
