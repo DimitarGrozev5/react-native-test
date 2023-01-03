@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Text,
   View,
   StyleSheet,
   Button,
-  Dimensions,
   useWindowDimensions,
 } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
@@ -12,6 +11,7 @@ import { BarCodeScanningResult, Camera, CameraType } from 'expo-camera';
 
 import AppLayout from '../components/app-layout';
 import Card from '../components/views/Card';
+import { Colors } from '../global-styling';
 
 const ViewScreen = () => {
   const { width } = useWindowDimensions();
@@ -54,13 +54,23 @@ const ViewScreen = () => {
               height: height,
               width: '100%',
             },
+            styles.camera,
           ]}
           type={CameraType.back}
           barCodeScannerSettings={{
             barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
           }}
           onBarCodeScanned={handleBarCodeScanned}
-        ></Camera>
+        >
+          <View
+            style={[{ width: width * 0.6, height: width * 0.6 }, styles.mark]}
+          >
+            <View style={styles.markUL}></View>
+            <View style={styles.markUR}></View>
+            <View style={styles.markLR}></View>
+            <View style={styles.markLL}></View>
+          </View>
+        </Camera>
       </Card>
     </AppLayout>
   );
@@ -68,4 +78,49 @@ const ViewScreen = () => {
 
 export default ViewScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  camera: { justifyContent: 'center', alignItems: 'center' },
+  mark: {
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  markUL: {
+    borderWidth: 5,
+    borderColor: Colors.primary500,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    borderTopLeftRadius: 24,
+    width: '40%',
+    height: '40%',
+  },
+  markUR: {
+    borderWidth: 5,
+    borderColor: Colors.primary500,
+    borderRightWidth: 0,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 24,
+    width: '40%',
+    height: '40%',
+  },
+  markLL: {
+    borderWidth: 5,
+    borderColor: Colors.primary500,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderBottomRightRadius: 24,
+    width: '40%',
+    height: '40%',
+    marginLeft: '20%',
+  },
+  markLR: {
+    borderWidth: 5,
+    borderColor: Colors.primary500,
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    borderTopRightRadius: 24,
+    width: '40%',
+    height: '40%',
+    marginLeft: '20%',
+  },
+});
