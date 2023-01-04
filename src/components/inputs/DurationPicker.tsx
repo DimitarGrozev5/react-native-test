@@ -16,6 +16,7 @@ import { getHMS } from '../../util/getHMS';
 import { leadingZeroes } from '../../util/leading-zeroes';
 import AccentText from '../views/AccentText';
 import ControllableTextInput from './ControllableTextInput';
+import ScrollableSelect from './ScrollableSelect';
 
 type Props = {
   value: Seconds;
@@ -64,18 +65,29 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
   }, [value]);
 
   const { pick } = useDarkModeStyle();
+  
+
+  const changeHandler = (scale: number) => (index: number) => {
+    console.log(index * scale);
+  };
 
   return (
     <View style={[styles.container, pick(styles.containerDark)]}>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
-          <TextInput
+          {/* <TextInput
             value={h}
             onChange={handleChange(setH)}
             onBlur={blurHandler}
             style={[styles.textInput, pick(styles.textInputDark)]}
             cursorColor={LightColors.primary700}
             keyboardType="numeric"
+          /> */}
+          <ScrollableSelect
+            values={Array(24)
+              .fill('')
+              .map((_, i) => i.toString())}
+            onChange={changeHandler(3600)}
           />
         </View>
         <View>
@@ -84,12 +96,18 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
-          <ControllableTextInput
+          {/* <ControllableTextInput
             value={m}
             onChange={handleChange(setM)}
             onBlur={blurHandler}
             style={[styles.textInput, pick(styles.textInputDark)]}
             cursorColor={LightColors.primary700}
+          /> */}
+          <ScrollableSelect
+            values={Array(60)
+              .fill('')
+              .map((_, i) => i.toString())}
+            onChange={changeHandler(60)}
           />
         </View>
         <View>
@@ -98,12 +116,18 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
-          <ControllableTextInput
+          {/* <ControllableTextInput
             value={s}
             onChange={handleChange(setS)}
             onBlur={blurHandler}
             style={[styles.textInput, pick(styles.textInputDark)]}
             cursorColor={LightColors.primary700}
+          /> */}
+          <ScrollableSelect
+            values={Array(60)
+              .fill('')
+              .map((_, i) => i.toString())}
+            onChange={changeHandler(1)}
           />
         </View>
         <View>

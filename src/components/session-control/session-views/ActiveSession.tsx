@@ -57,7 +57,7 @@ const ActiveSession: React.FC<Props> = ({
 
       <Modal visible={showModal} animationType="slide">
         <View style={[styles.modalContainer, pick(styles.modalContainerDark)]}>
-          <Card style={{ height: '30%', minHeight: 200 }}>
+          <Card style={{ height: '40%', minHeight: 200 }}>
             <View style={styles.modalContent}>
               <CenteredText style={{ fontSize: 18 }}>
                 <AccentText>Set actual time</AccentText>
