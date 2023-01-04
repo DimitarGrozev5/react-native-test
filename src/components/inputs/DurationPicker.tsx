@@ -25,50 +25,19 @@ type Props = {
 
 const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
   // Set display values for h,m,s
-  const [h, setH] = useState('0');
-  const [m, setM] = useState('00');
-  const [s, setS] = useState('00');
+  const [h, setH] = useState(0);
+  const [m, setM] = useState(0);
+  const [s, setS] = useState(0);
 
-  // When input text changes, validate input and update display values
-  const handleChange =
-    (setter: typeof setH) =>
-    (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
-      event.preventDefault();
-
-      const text = event.nativeEvent.text;
-      const notOnlyNumbers = text
-        .split('')
-        .map((char) =>
-          ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(char)
-        )
-        .some((isANumber) => isANumber === false);
-      if (!notOnlyNumbers) {
-        setter(text);
-      }
-    };
   // When display values change, update onChange handler
   useEffect(() => {
     onChange(Number(h) * 3600 + Number(m) * 60 + Number(s));
   }, [h, m, s, onChange]);
 
-  // On blur, use the value to update the dssplay values
-  const blurHandler = useCallback(() => {
-    const [hh, mm, ss] = getHMS(value).map((val, i) => {
-      if (i === 0) {
-        return val.toString();
-      }
-      return leadingZeroes(val, 2);
-    });
-    setH(hh);
-    setM(mm);
-    setS(ss);
-  }, [value]);
-
   const { pick } = useDarkModeStyle();
-  
 
-  const changeHandler = (scale: number) => (index: number) => {
-    console.log(index * scale);
+  const changeHandler = (setter: typeof setH) => (index: number) => {
+    setter(index);
   };
 
   return (
@@ -87,7 +56,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
             values={Array(24)
               .fill('')
               .map((_, i) => i.toString())}
-            onChange={changeHandler(3600)}
+            onChange={changeHandler(setH)}
           />
         </View>
         <View>
@@ -107,7 +76,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
-            onChange={changeHandler(60)}
+            onChange={changeHandler(setM)}
           />
         </View>
         <View>
@@ -127,7 +96,7 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
-            onChange={changeHandler(1)}
+            onChange={changeHandler(setS)}
           />
         </View>
         <View>
