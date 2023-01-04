@@ -1,4 +1,4 @@
-import { TextStyle, useColorScheme, StyleProp } from 'react-native';
+import { useColorScheme, StyleProp } from 'react-native';
 
 export const LightColors = {
   primary300: '#f2d38f',
