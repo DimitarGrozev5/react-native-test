@@ -9,6 +9,8 @@ import {
   NativeScrollEvent,
 } from 'react-native';
 
+import { LightColors } from '../../global-styling';
+
 type Props = {
   values: string[];
   onChange: (index: number) => void;
@@ -33,6 +35,7 @@ const ScrollableSelect: React.FC<Props> = ({ values, onChange }) => {
         style={[styles.container, { height: textHeight * 3 }]}
         snapToOffsets={values.map((val, i) => i * textHeight)}
         onScroll={handleScroll}
+        showsVerticalScrollIndicator={false}
       >
         {['', ...values, ''].map((val, i) => (
           <Text
@@ -55,20 +58,22 @@ export default ScrollableSelect;
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: 'black',
-    borderWidth: 1,
+    backgroundColor: LightColors.primary300,
     height: 100,
+    zIndex: 1,
   },
   text: {
+    color: LightColors.primary700,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 24,
     paddingVertical: 8,
   },
   mask: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(242, 211, 143, 0.8)',
     position: 'absolute',
     left: 0,
     right: 0,
+    zIndex: 2,
   },
   headerMask: {
     top: 0,
