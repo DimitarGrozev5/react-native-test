@@ -1,5 +1,10 @@
+import React from 'react';
 import { ListRenderItemInfo, StyleSheet, Text, View } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 import { DailyAchievement } from '../../model/db/db';
 import { formatTime } from '../../util/format-time';
 import AccentText from '../views/AccentText';
@@ -10,8 +15,9 @@ type Props = {
 };
 
 const HistoryDataPoint = ({ data, max }: Props) => {
+  const { pick } = useDarkModeStyle();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, pick(styles.containerDark)]}>
       <View style={[styles.dataRow]}>
         <View style={[styles.textData]}></View>
         <View style={[styles.graphData]}>
@@ -21,7 +27,9 @@ const HistoryDataPoint = ({ data, max }: Props) => {
 
       <View style={[styles.dataRow]}>
         <View style={[styles.textData]}>
-          <Text style={styles.textDataLabel}>{formatTime(data.item.goal)}</Text>
+          <Text style={[styles.textDataLabel, pick(styles.textDataLabelDark)]}>
+            {formatTime(data.item.goal)}
+          </Text>
         </View>
         <View style={[styles.graphData]}>
           <DataBar width={data.item.goal / max} type="goal" />
@@ -30,7 +38,7 @@ const HistoryDataPoint = ({ data, max }: Props) => {
 
       <View style={[styles.dataRow]}>
         <View style={[styles.textData]}>
-          <Text style={styles.textDataLabel}>
+          <Text style={[styles.textDataLabel, pick(styles.textDataLabelDark)]}>
             {formatTime(data.item.achieved)}
           </Text>
         </View>
@@ -49,18 +57,25 @@ const DataBar = ({
   width: number;
   type: 'goal' | 'achieved';
 }) => {
+  const { pick } = useDarkModeStyle();
   return (
     <View
       style={[
         styles.dataBar,
         type === 'goal' ? styles.goalStyle : styles.achievementStyle,
+        type === 'goal'
+          ? pick(styles.goalStyleDark)
+          : pick(styles.achievementStyleDark),
         { width: `${width * 100}%` },
       ]}
     >
       <Text
-        style={
-          type === 'goal' ? styles.goalTextStyle : styles.achievedTextStyle
-        }
+        style={[
+          type === 'goal' ? styles.goalTextStyle : styles.achievedTextStyle,
+          type === 'goal'
+            ? pick(styles.goalTextStyleDark)
+            : pick(styles.achievedTextStyleDark),
+        ]}
         numberOfLines={1}
       >
         {type}
@@ -73,10 +88,13 @@ export default HistoryDataPoint;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.primary300,
+    backgroundColor: LightColors.primary300,
     marginBottom: 8,
     padding: 8,
     paddingBottom: 16,
+  },
+  containerDark: {
+    backgroundColor: DarkColors.primary300,
   },
   dataRow: {
     flexDirection: 'row',
@@ -89,6 +107,9 @@ const styles = StyleSheet.create({
   textDataLabel: {
     textAlign: 'right',
   },
+  textDataLabelDark: {
+    color: DarkColors.text,
+  },
   graphData: {
     flex: 5,
   },
@@ -96,17 +117,31 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   goalStyle: {
-    borderColor: Colors.primary600,
-    backgroundColor: Colors.primary600,
+    borderColor: LightColors.primary600,
+    backgroundColor: LightColors.primary600,
+  },
+  goalStyleDark: {
+    borderColor: DarkColors.primary600,
+    backgroundColor: DarkColors.primary600,
   },
   goalTextStyle: {
-    color: Colors.primary300,
+    color: LightColors.primary300,
+  },
+  goalTextStyleDark: {
+    color: DarkColors.primary300,
   },
   achievementStyle: {
-    borderColor: Colors.primary700,
-    backgroundColor: Colors.primary300,
+    borderColor: LightColors.primary700,
+    backgroundColor: LightColors.primary300,
+  },
+  achievementStyleDark: {
+    borderColor: DarkColors.primary700,
+    backgroundColor: DarkColors.primary300,
   },
   achievedTextStyle: {
-    color: Colors.primary700,
+    color: LightColors.primary700,
+  },
+  achievedTextStyleDark: {
+    color: DarkColors.primary700,
   },
 });

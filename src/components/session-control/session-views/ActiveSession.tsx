@@ -1,7 +1,11 @@
 import React, { useCallback, useState } from 'react';
 
 import { Modal, StyleSheet, View } from 'react-native';
-import { Colors } from '../../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../../global-styling';
 import { Seconds } from '../../../model/util-types';
 import { formatTime } from '../../../util/format-time';
 import StyledButton from '../../inputs/Button';
@@ -32,6 +36,7 @@ const ActiveSession: React.FC<Props> = ({
     wrongTimeHandler(realTime);
     setShowModal(false);
   }, [realTime, wrongTimeHandler]);
+  const { pick } = useDarkModeStyle();
   return (
     <>
       <StyledButton onPress={stopSessionHandler}>Stop Extension</StyledButton>
@@ -51,7 +56,7 @@ const ActiveSession: React.FC<Props> = ({
       </StyledButton>
 
       <Modal visible={showModal} animationType="slide">
-        <View style={styles.modalContainer}>
+        <View style={[styles.modalContainer, pick(styles.modalContainerDark)]}>
           <Card style={{ height: '30%', minHeight: 200 }}>
             <View style={styles.modalContent}>
               <CenteredText style={{ fontSize: 18 }}>
@@ -86,7 +91,10 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: Colors.primary300,
+    backgroundColor: LightColors.primary300,
+  },
+  modalContainerDark: {
+    backgroundColor: DarkColors.primary300,
   },
   modalContent: {
     flex: 1,

@@ -1,17 +1,29 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 
 type Props = React.PropsWithChildren;
 
 const AccentText: React.FC<Props> = ({ children }) => {
-  return <Text style={[styles.accentText]}>{children}</Text>;
+  const { pick } = useDarkModeStyle();
+  return (
+    <Text style={[styles.accentText, pick(styles.accentTextDark)]}>
+      {children}
+    </Text>
+  );
 };
 
 export default AccentText;
 
 const styles = StyleSheet.create({
   accentText: {
-    color: Colors.primary700,
+    color: LightColors.primary700,
+  },
+  accentTextDark: {
+    color: DarkColors.primary700,
   },
 });

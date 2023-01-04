@@ -1,5 +1,10 @@
+import React from 'react';
 import { ListRenderItemInfo, StyleSheet, View, Text } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 import { VerticalData } from './HistoryData';
 
 type Props = {
@@ -8,6 +13,7 @@ type Props = {
 };
 
 const VerticalDataPoint = ({ data, max }: Props) => {
+  const { pick } = useDarkModeStyle();
   if (data.item.type === 'achivement') {
     return (
       <>
@@ -15,6 +21,7 @@ const VerticalDataPoint = ({ data, max }: Props) => {
           style={[
             styles.dataBar,
             styles.goalStyle,
+            pick(styles.goalStyleDark),
             { height: `${(data.item.data.goal / max) * 100}%` },
           ]}
         ></View>
@@ -22,6 +29,7 @@ const VerticalDataPoint = ({ data, max }: Props) => {
           style={[
             styles.dataBar,
             styles.achievementStyle,
+            pick(styles.achievementStyleDark),
             { height: `${(data.item.data.achieved / max) * 100}%` },
           ]}
         ></View>
@@ -32,7 +40,9 @@ const VerticalDataPoint = ({ data, max }: Props) => {
   return (
     <View style={styles.dateContainer}>
       <View style={styles.dateRotated}>
-        <Text style={styles.dateText}>{data.item.data}</Text>
+        <Text style={[styles.dateText, pick(styles.dateTextDark)]}>
+          {data.item.data}
+        </Text>
       </View>
     </View>
   );
@@ -48,11 +58,17 @@ const styles = StyleSheet.create({
   goalStyle: {
     marginLeft: 2,
     marginRight: 1,
-    borderColor: Colors.primary600,
+    borderColor: LightColors.primary600,
+  },
+  goalStyleDark: {
+    borderColor: DarkColors.primary600,
   },
   achievementStyle: {
     marginRight: 2,
-    borderColor: Colors.primary700,
+    borderColor: LightColors.primary700,
+  },
+  achievementStyleDark: {
+    borderColor: DarkColors.primary700,
   },
   dateContainer: {
     alignSelf: 'flex-end',
@@ -64,5 +80,8 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 8,
+  },
+  dateTextDark: {
+    color: DarkColors.primary700,
   },
 });

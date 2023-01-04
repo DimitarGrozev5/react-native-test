@@ -15,7 +15,11 @@ import {
   TextStyle,
   View,
 } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 import AccentText from '../views/AccentText';
 
 type Props<T extends FieldValues> = {
@@ -42,6 +46,7 @@ const ControlledInput = <T extends FieldValues>({
   placeholder = '',
   label = '',
 }: Props<T>) => {
+  const { pick } = useDarkModeStyle();
   return (
     <View style={styles.container}>
       {!!label && <AccentText>{label}</AccentText>}
@@ -50,7 +55,12 @@ const ControlledInput = <T extends FieldValues>({
         rules={rules}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={[styles.input, inputStyle, errors ? styles.inputError : {}]}
+            style={[
+              styles.input,
+              pick(styles.inputDark),
+              inputStyle,
+              errors ? styles.inputError : {},
+            ]}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -75,13 +85,18 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: Colors.primary600,
+    borderColor: LightColors.primary600,
     borderRadius: 8,
-    backgroundColor: Colors.primary300,
+    backgroundColor: LightColors.primary300,
     paddingVertical: 4,
     paddingHorizontal: 12,
-    color: Colors.primary700,
+    color: LightColors.primary700,
     fontSize: 16,
+  },
+  inputDark: {
+    borderColor: DarkColors.primary600,
+    backgroundColor: DarkColors.primary300,
+    color: DarkColors.primary700,
   },
   inputError: {
     borderColor: 'red',

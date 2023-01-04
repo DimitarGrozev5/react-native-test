@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 import AccentText from './AccentText';
 import CenteredText from './CenteredText';
 
@@ -18,10 +22,12 @@ const Card: React.FC<Props> = ({
   expand = false,
   centered = true,
 }) => {
+  const { pick } = useDarkModeStyle();
   return (
     <View
       style={[
         styles.container,
+        pick(styles.containerDark),
         expand ? styles.expand : {},
         centered ? styles.centeredContent : {},
         style,
@@ -45,8 +51,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     margin: 8,
-    backgroundColor: Colors.primary500,
+    backgroundColor: LightColors.primary500,
     elevation: 8,
+  },
+  containerDark: {
+    backgroundColor: DarkColors.primary500,
   },
   expand: { flex: 1 },
   centeredContent: { justifyContent: 'center' },

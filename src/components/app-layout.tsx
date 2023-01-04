@@ -2,14 +2,15 @@ import React from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
-import { Colors } from '../global-styling';
+import { DarkColors, LightColors, useDarkModeStyle } from '../global-styling';
 
 type Props = React.PropsWithChildren;
 
 const AppLayout: React.FC<Props> = ({ children }) => {
+  const { pick } = useDarkModeStyle();
   return (
     <KeyboardAvoidingView behavior="height" style={styles.screen}>
-      <View style={[styles.container]}>
+      <View style={[styles.container, pick(styles.containerDark)]}>
         <StatusBar style="dark" />
         {children}
       </View>
@@ -24,10 +25,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    backgroundColor: Colors.primary300,
+    backgroundColor: LightColors.primary300,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 16,
+  },
+  containerDark: {
+    backgroundColor: DarkColors.primary300,
   },
 });

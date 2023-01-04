@@ -6,7 +6,11 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
 } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 import { Seconds } from '../../model/util-types';
 import { getHMS } from '../../util/getHMS';
 import { leadingZeroes } from '../../util/leading-zeroes';
@@ -59,16 +63,18 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
     setS(ss);
   }, [value]);
 
+  const { pick } = useDarkModeStyle();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, pick(styles.containerDark)]}>
       <View style={styles.inputContainer}>
-        <View style={styles.inputBox}>
+        <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
           <TextInput
             value={h}
             onChange={handleChange(setH)}
             onBlur={blurHandler}
-            style={styles.textInput}
-            cursorColor={Colors.primary700}
+            style={[styles.textInput, pick(styles.textInputDark)]}
+            cursorColor={LightColors.primary700}
             keyboardType="numeric"
           />
         </View>
@@ -77,13 +83,13 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
         </View>
       </View>
       <View style={styles.inputContainer}>
-        <View style={styles.inputBox}>
+        <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
           <ControllableTextInput
             value={m}
             onChange={handleChange(setM)}
             onBlur={blurHandler}
-            style={styles.textInput}
-            cursorColor={Colors.primary700}
+            style={[styles.textInput, pick(styles.textInputDark)]}
+            cursorColor={LightColors.primary700}
           />
         </View>
         <View>
@@ -91,13 +97,13 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
         </View>
       </View>
       <View style={styles.inputContainer}>
-        <View style={styles.inputBox}>
+        <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
           <ControllableTextInput
             value={s}
             onChange={handleChange(setS)}
             onBlur={blurHandler}
-            style={styles.textInput}
-            cursorColor={Colors.primary700}
+            style={[styles.textInput, pick(styles.textInputDark)]}
+            cursorColor={LightColors.primary700}
           />
         </View>
         <View>
@@ -112,13 +118,16 @@ export default DurationPicker;
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: Colors.primary700,
+    borderColor: LightColors.primary700,
     borderWidth: 1,
     borderRadius: 10,
     flexDirection: 'row',
     padding: 16,
     paddingHorizontal: 8,
     margin: 16,
+  },
+  containerDark: {
+    borderColor: DarkColors.primary700,
   },
   inputContainer: {
     flex: 1,
@@ -127,16 +136,23 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     width: '100%',
-    borderBottomColor: Colors.primary700,
+    borderBottomColor: LightColors.primary700,
     borderBottomWidth: 1,
+  },
+  inputBoxDark: {
+    borderBottomColor: DarkColors.primary700,
   },
   textInput: {
     textAlign: 'center',
-    color: Colors.primary700,
+    color: LightColors.primary700,
     padding: 4,
     fontSize: 20,
-    backgroundColor: Colors.primary300,
+    backgroundColor: LightColors.primary300,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+  },
+  textInputDark: {
+    color: DarkColors.primary700,
+    backgroundColor: DarkColors.primary300,
   },
 });

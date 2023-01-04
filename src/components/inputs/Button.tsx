@@ -1,13 +1,10 @@
 import React from 'react';
+import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { Colors } from '../../global-styling';
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 
 type Props = {
   children: string;
@@ -22,20 +19,28 @@ const StyledButton: React.FC<Props> = ({
   style,
   plain = false,
 }) => {
+  const { pick, switchColors } = useDarkModeStyle();
   return (
-    <View
-      style={[
-        style,
-        styles.container,
-        ...addPlain(plain, styles.plainContainer),
-      ]}
-    >
+    <View style={[style, styles.container, plain ? styles.plainContainer : {}]}>
       <Pressable
-        style={[styles.pressable, ...addPlain(plain, styles.plainPressable)]}
+        style={[
+          styles.pressable,
+          pick(styles.pressableDark),
+          plain ? styles.plainPressable : {},
+        ]}
         onPress={onPress}
-        android_ripple={{ color: Colors.primary700 }}
+        android_ripple={{
+          color: switchColors(LightColors.primary700, DarkColors.text),
+        }}
       >
-        <Text style={[styles.text, ...addPlain(plain, styles.plainText)]}>
+        <Text
+          style={[
+            styles.text,
+            pick(styles.textDark),
+            plain ? styles.plainText : {},
+            plain ? pick(styles.plainTextDark) : {},
+          ]}
+        >
           {children}
         </Text>
       </Pressable>
@@ -45,16 +50,6 @@ const StyledButton: React.FC<Props> = ({
 
 export default StyledButton;
 
-const addPlain = <T extends ViewStyle | TextStyle>(
-  plain: boolean,
-  style: T
-): T[] => {
-  if (plain) {
-    return [style];
-  }
-  return [];
-};
-
 const styles = StyleSheet.create({
   container: {
     borderRadius: 28,
@@ -62,14 +57,20 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   pressable: {
-    backgroundColor: Colors.primary600,
+    backgroundColor: LightColors.primary600,
     paddingVertical: 12,
     paddingHorizontal: 16,
     elevation: 2,
   },
+  pressableDark: {
+    backgroundColor: DarkColors.primary600,
+  },
   text: {
-    color: Colors.primary300,
+    color: LightColors.primary300,
     textAlign: 'center',
+  },
+  textDark: {
+    color: DarkColors.primary300,
   },
   plainContainer: {
     borderRadius: 0,
@@ -82,9 +83,13 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   plainText: {
-    color: Colors.primary700,
+    color: LightColors.primary700,
     textDecorationStyle: 'solid',
     textDecorationLine: 'underline',
-    textDecorationColor: Colors.primary700,
+    textDecorationColor: LightColors.primary700,
+  },
+  plainTextDark: {
+    color: DarkColors.primary700,
+    textDecorationColor: DarkColors.primary700,
   },
 });

@@ -10,7 +10,12 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import StoreProvider from './src/store-mobx/storeContext';
 import HomeScreen from './src/views/home-screen';
 import History from './src/views/history';
-import { Colors } from './src/global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useColors,
+  useDarkModeStyle,
+} from './src/global-styling';
 import RegisterScreen from './src/views/register';
 import ViewScreen from './src/views/view-screen';
 
@@ -18,17 +23,25 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
+  const colors = useColors();
+  const { switchColors } = useDarkModeStyle();
   return (
     <Drawer.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: Colors.primary600,
+          backgroundColor: switchColors(
+            LightColors.primary600,
+            DarkColors.primary500
+          ),
         },
-        headerTintColor: Colors.primary300,
-        drawerActiveBackgroundColor: Colors.primary500,
-        drawerActiveTintColor: Colors.primary700,
-        drawerStyle: { backgroundColor: Colors.primary300 },
-        drawerLabelStyle: { color: Colors.primary700 },
+        headerTintColor: switchColors(
+          LightColors.primary300,
+          DarkColors.primary700
+        ),
+        drawerActiveBackgroundColor: colors.primary500,
+        drawerActiveTintColor: colors.primary700,
+        drawerStyle: { backgroundColor: colors.primary300 },
+        drawerLabelStyle: { color: colors.primary700 },
       }}
     >
       <Drawer.Screen
@@ -47,6 +60,7 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <Ionicons name="home" color={color} size={size} />
           ),
+          unmountOnBlur: true,
         }}
       />
       <Drawer.Screen
@@ -81,15 +95,22 @@ const DrawerNavigator = () => {
 };
 
 export default function App() {
+  const { switchColors } = useDarkModeStyle();
   return (
     <StoreProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
-              backgroundColor: Colors.primary600,
+              backgroundColor: switchColors(
+                LightColors.primary600,
+                DarkColors.primary500
+              ),
             },
-            headerTintColor: Colors.primary300,
+            headerTintColor: switchColors(
+              LightColors.primary300,
+              DarkColors.primary700
+            ),
           }}
         >
           <Stack.Screen

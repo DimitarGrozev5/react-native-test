@@ -1,6 +1,10 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 
 type DataBarProps = {
   goal: number;
@@ -10,13 +14,24 @@ type DataBarProps = {
 const p = (n: number) => `${n * 100}%`;
 
 const DataBar: React.FC<DataBarProps> = ({ goal, achieved }) => {
+  const { pick } = useDarkModeStyle();
   return (
     <View style={styles.dataBarContainer}>
       <View
-        style={[styles.dataBar, styles.goalBar, { height: p(goal) }]}
+        style={[
+          styles.dataBar,
+          styles.goalBar,
+          pick(styles.goalBarDark),
+          { height: p(goal) },
+        ]}
       ></View>
       <View
-        style={[styles.dataBar, styles.achievedBar, { height: p(achieved) }]}
+        style={[
+          styles.dataBar,
+          styles.achievedBar,
+          pick(styles.achievedBarDark),
+          { height: p(achieved) },
+        ]}
       ></View>
     </View>
   );
@@ -37,11 +52,19 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   goalBar: {
-    borderColor: Colors.primary600,
-    backgroundColor: Colors.primary600,
+    borderColor: LightColors.primary600,
+    backgroundColor: LightColors.primary600,
+  },
+  goalBarDark: {
+    borderColor: DarkColors.primary600,
+    backgroundColor: DarkColors.primary600,
   },
   achievedBar: {
-    borderColor: Colors.primary700,
-    backgroundColor: Colors.primary300,
+    borderColor: LightColors.primary700,
+    backgroundColor: LightColors.primary300,
+  },
+  achievedBarDark: {
+    borderColor: DarkColors.primary700,
+    backgroundColor: DarkColors.primary300,
   },
 });

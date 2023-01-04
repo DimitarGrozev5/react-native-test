@@ -2,7 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { ScreenNavigation } from '../../../App';
-import { Colors } from '../../global-styling';
+import {
+  DarkColors,
+  LightColors,
+  useDarkModeStyle,
+} from '../../global-styling';
 import { DailyAchievement } from '../../model/db/db';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import AccentText from '../views/AccentText';
@@ -35,17 +39,21 @@ const DataOverview = () => {
     [last7days, max]
   );
 
+  const { pick, switchColors } = useDarkModeStyle();
+
   return (
     <Card header="Previous Days" expand>
       <Pressable
         style={styles.pressable}
         onPress={() => nav.navigate('History')}
-        android_ripple={{ color: Colors.primary300 }}
+        android_ripple={{
+          color: switchColors(LightColors.primary300, DarkColors.text),
+        }}
       >
         <CenteredText>
           <AccentText>Last 7 Days</AccentText>
         </CenteredText>
-        <View style={styles.graphContainer}>
+        <View style={[styles.graphContainer, pick(styles.graphContainerDark)]}>
           {scaled7days.map((day) => (
             <DataBar
               key={day.date.join(',')}
@@ -66,10 +74,13 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: Colors.primary600,
+    borderColor: LightColors.primary600,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'flex-end',
+  },
+  graphContainerDark: {
+    borderColor: DarkColors.primary600,
   },
   pressable: {
     flex: 1,

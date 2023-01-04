@@ -1,3 +1,4 @@
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
