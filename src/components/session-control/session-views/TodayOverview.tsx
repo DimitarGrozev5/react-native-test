@@ -7,14 +7,19 @@ import CenteredText from '../../views/CenteredText';
 
 type Props = React.PropsWithChildren & {
   today: DailyAchievement;
+  sessionIsActive?: boolean;
 };
 
-const TodayOverview: React.FC<Props> = ({ children, today }) => {
+const TodayOverview: React.FC<Props> = ({
+  children,
+  today,
+  sessionIsActive = false,
+}) => {
   const spent = today.achieved;
   const goal = today.goal;
 
   return (
-    <Card header="What's happening today" expand>
+    <Card header="What's happening today" expand={!sessionIsActive}>
       <CenteredText>
         You have spent <AccentText>{formatTime(spent)}s</AccentText> in
         extension

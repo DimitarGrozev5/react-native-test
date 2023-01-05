@@ -18,8 +18,9 @@ import {
 } from './src/global-styling';
 import RegisterScreen from './src/views/register';
 import ViewScreen from './src/views/view-screen';
+import WebViewScreen from './src/views/web-view-screen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -119,20 +120,26 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="History" component={History} />
+          <Stack.Screen
+            name="WebView"
+            component={WebViewScreen}
+            initialParams={{ url: 'http://google.com' }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </StoreProvider>
   );
 }
 
-type RootStackParamList = {
-  Home: undefined;
+export type RootStackParamList = {
+  HomeDrawer: undefined;
   History: undefined;
+  WebView: { url: string };
 };
 
-export type ScreenProps = NativeStackScreenProps<
+export type WebViewScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  'Home',
-  'History'
+  'WebView'
 >;
-export type ScreenNavigation = ScreenProps['navigation'];
+
+// export type ScreenNavigation = ScreenProps['navigation'];

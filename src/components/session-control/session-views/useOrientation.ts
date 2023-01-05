@@ -29,10 +29,13 @@ export const useOrientation = (): 'down' | 'up' => {
   useEffect(() => {
     _subscribe();
     return () => _unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (Math.max(Math.abs(x*2), Math.abs(y*2), Math.abs(z)) === Math.abs(z)) {
+    if (
+      Math.max(Math.abs(x * 2), Math.abs(y * 2), Math.abs(z)) === Math.abs(z)
+    ) {
       if (pos === 'up') {
         setPos('down');
       }

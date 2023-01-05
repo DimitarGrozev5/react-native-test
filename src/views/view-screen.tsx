@@ -3,18 +3,18 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
-  useWindowDimensions,
+  LayoutChangeEvent,
+  Pressable,
 } from 'react-native';
-import { BarCodePoint, BarCodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { BarCodeScanningResult, Camera, CameraType } from 'expo-camera';
 
 import AppLayout from '../components/app-layout';
 import Card from '../components/views/Card';
 import { LightColors } from '../global-styling';
-import CenteredText from '../components/views/CenteredText';
-import AccentText from '../components/views/AccentText';
 import WebView from 'react-native-webview';
+import StyledButton from '../components/inputs/Button';
+import { useNavigation } from '@react-navigation/native';
 
 const center = (res: BarCodeScanningResult) => {
   const [sumX, sumY] = res.cornerPoints.reduce(
@@ -41,8 +41,19 @@ const dist = (res: BarCodeScanningResult) => {
 };
 
 const ViewScreen = () => {
-  const { width } = useWindowDimensions();
-  const height = Math.round((width * 16) / 9);
+  // Setup camera size
+  const [cameraSize, setCameraSize] = useState({ w: 0, h: 0 });
+  const layoutChangeHandler = (e: LayoutChangeEvent) => {
+    let width = e.nativeEvent.layout.width - 30;
+    let height = Math.round((width * 16) / 9);
+
+    if (height > e.nativeEvent.layout.height) {
+      height = e.nativeEvent.layout.height - 30;
+      width = Math.round((height * 9) / 16);
+    }
+
+    setCameraSize({ w: width, h: height });
+  };
 
   const [cameraPermission, requestCameraPermission] =
     Camera.useCameraPermissions();
@@ -50,6 +61,8 @@ const ViewScreen = () => {
   const [scanResult, setScanResult] = useState<BarCodeScanningResult | null>(
     null
   );
+
+  const navigation = useNavigation();
 
   if (!cameraPermission) {
     // Camera permissions are still loading
@@ -64,7 +77,9 @@ const ViewScreen = () => {
           <Text style={{ textAlign: 'center' }}>
             We need your permission to show the camera
           </Text>
-          <Button onPress={requestCameraPermission} title="grant permission" />
+          <StyledButton onPress={requestCameraPermission}>
+            Grant permission
+          </StyledButton>
         </Card>
       </AppLayout>
     );
@@ -72,20 +87,21 @@ const ViewScreen = () => {
 
   const handleBarCodeScanned = (results: BarCodeScanningResult) => {
     setScanResult(results);
-    console.log(results.cornerPoints);
+  };
 
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  const handleNavigate = () => {
+    navigation.navigate('WebView', { url: scanResult?.data });
   };
 
   return (
     <AppLayout>
-      <Card expand>
+      <Card expand onLayout={layoutChangeHandler}>
         <Camera
           ratio="16:9"
           style={[
             {
-              height: height,
-              width: '100%',
+              height: cameraSize.h,
+              width: cameraSize.w,
             },
             styles.camera,
           ]}
@@ -111,8 +127,8 @@ const ViewScreen = () => {
                 styles.webView,
                 /* scanResult
                 ? */ {
-                  top: 0, //scanResult.cornerPoints[3].y,
-                  left: 0, //scanResult.cornerPoints[3].x,
+                  top: 0,
+                  left: 0,
                   transform: [
                     { translateX: center(scanResult).x - 250 },
                     { translateY: center(scanResult).y - 250 },
@@ -131,6 +147,11 @@ const ViewScreen = () => {
                 },
               ]}
             >
+              <Pressable
+                style={[styles.webViewPressable]}
+                onPress={handleNavigate}
+                android_ripple={{ color: LightColors.primary300 }}
+              ></Pressable>
               <WebView
                 source={{ uri: scanResult.data }}
                 style={{ marginTop: 20 }}
@@ -149,7 +170,11 @@ const ViewScreen = () => {
 export default ViewScreen;
 
 const styles = StyleSheet.create({
-  camera: { justifyContent: 'center', alignItems: 'center' },
+  camera: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
   mark: {
     flexWrap: 'wrap',
     justifyContent: 'space-between',
@@ -205,5 +230,14 @@ const styles = StyleSheet.create({
     padding: 2,
     justifyContent: 'center',
     alignItems: 'stretch',
+    zIndex: 5,
+  },
+  webViewPressable: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    zIndex: 6,
   },
 });

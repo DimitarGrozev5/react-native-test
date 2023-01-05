@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
 import {
   DarkColors,
   LightColors,
@@ -13,6 +13,7 @@ type Props = React.PropsWithChildren & {
   style?: ViewStyle | ViewStyle[];
   expand?: boolean;
   centered?: boolean;
+  onLayout?: (e: LayoutChangeEvent) => void;
 };
 
 const Card: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const Card: React.FC<Props> = ({
   style = {},
   expand = false,
   centered = true,
+  onLayout = () => {},
 }) => {
   const { pick } = useDarkModeStyle();
   return (
@@ -32,6 +34,7 @@ const Card: React.FC<Props> = ({
         centered ? styles.centeredContent : {},
         style,
       ]}
+      onLayout={onLayout}
     >
       {!!header && (
         <CenteredText style={[styles.header, styles.centered]}>

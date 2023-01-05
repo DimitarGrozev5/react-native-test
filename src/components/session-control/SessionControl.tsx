@@ -101,7 +101,7 @@ const SessionControl = observer(() => {
 
   if (sessionState.active) {
     return (
-      <TodayOverview today={today}>
+      <TodayOverview today={today} sessionIsActive>
         <ActiveSession
           timeSoFar={sessionState.timeSoFar}
           timeToGoal={sessionState.timeToGoal}
