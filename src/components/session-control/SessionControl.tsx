@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { rawToSession, SessionState } from './helpers/raw-to-session';
 import ActiveSession from './session-views/ActiveSession';
 import InactiveSession from './session-views/InavtiveSession';
 import TodayOverview from './session-views/TodayOverview';
@@ -12,6 +11,7 @@ import { Seconds } from '../../model/util-types';
 import { useDevicePosition } from './session-views/useDevicePosition';
 import CenteredText from '../views/CenteredText';
 import AccentText from '../views/AccentText';
+import { useSessionTimer } from './hooks/useSessionTimer';
 
 const SessionControl = observer(() => {
   // Get values from store
@@ -19,10 +19,8 @@ const SessionControl = observer(() => {
   const goals = useDBStore('goals');
   const today = useDBStore('achieved').today;
 
-  // State for the component
-  const [sessionState, setSessionState] = useState<SessionState>({
-    active: false,
-  });
+  // Get state for the component
+  const sessionState = useSessionTimer(activeSession, goals, today);
 
   // Helper values, for controlling auto start and stop
   const [requestedAutoStart, setRequestedAutoStart] = useState(false);
@@ -30,22 +28,6 @@ const SessionControl = observer(() => {
 
   // Get the device orientation
   const downOrUp = useDevicePosition();
-
-  // Setup timer
-  useEffect(() => {
-    let timer: number;
-    if (activeSession.startedAt !== null) {
-      timer = requestAnimationFrame(() => {
-        const sess = rawToSession(activeSession, goals, today);
-        setSessionState(sess);
-      });
-    } else if (sessionState.active) {
-      setSessionState({ active: false });
-    }
-    return () => {
-      cancelAnimationFrame(timer);
-    };
-  }, [activeSession, activeSession.startedAt, goals, today, sessionState]);
 
   /// Handler functions
   // Stop the active session
