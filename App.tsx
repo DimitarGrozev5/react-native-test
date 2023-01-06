@@ -25,17 +25,17 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   const colors = useColors();
-  const { switchColors } = useDarkModeStyle();
+  const { switchValues } = useDarkModeStyle();
   return (
     <Drawer.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: switchColors(
+          backgroundColor: switchValues(
             LightColors.primary600,
             DarkColors.primary500
           ),
         },
-        headerTintColor: switchColors(
+        headerTintColor: switchValues(
           LightColors.primary300,
           DarkColors.primary700
         ),
@@ -96,19 +96,19 @@ const DrawerNavigator = () => {
 };
 
 export default function App() {
-  const { switchColors } = useDarkModeStyle();
+  const { switchValues } = useDarkModeStyle();
   return (
     <StoreProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
-              backgroundColor: switchColors(
+              backgroundColor: switchValues(
                 LightColors.primary600,
                 DarkColors.primary500
               ),
             },
-            headerTintColor: switchColors(
+            headerTintColor: switchValues(
               LightColors.primary300,
               DarkColors.primary700
             ),

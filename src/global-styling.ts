@@ -31,7 +31,7 @@ export const useDarkModeStyle = () => {
   if (scheme === 'dark') {
     return {
       pick: <T>(style: StyleProp<T>) => style,
-      switchColors: (lightColor: string, darkColor: string) => darkColor,
+      switchValues: (lightColor: string, darkColor: string) => darkColor,
     };
   }
 
@@ -39,6 +39,6 @@ export const useDarkModeStyle = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     pick: <T>(_: StyleProp<T>) => ({}),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    switchColors: (lightColor: string, darkColor: string) => lightColor,
+    switchValues: (lightColor: string, darkColor: string) => lightColor,
   };
 };

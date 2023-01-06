@@ -19,7 +19,7 @@ const StyledButton: React.FC<Props> = ({
   style,
   plain = false,
 }) => {
-  const { pick, switchColors } = useDarkModeStyle();
+  const { pick, switchValues } = useDarkModeStyle();
   return (
     <View style={[style, styles.container, plain ? styles.plainContainer : {}]}>
       <Pressable
@@ -30,7 +30,7 @@ const StyledButton: React.FC<Props> = ({
         ]}
         onPress={onPress}
         android_ripple={{
-          color: switchColors(LightColors.primary700, DarkColors.text),
+          color: switchValues(LightColors.primary700, DarkColors.text),
         }}
       >
         <Text

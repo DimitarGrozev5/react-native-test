@@ -39,7 +39,7 @@ const DataOverview = () => {
     [last7days, max]
   );
 
-  const { pick, switchColors } = useDarkModeStyle();
+  const { pick, switchValues } = useDarkModeStyle();
 
   const isLandscape = useOrientation() === 'landscape';
   const { height } = useWindowDimensions();
@@ -54,7 +54,7 @@ const DataOverview = () => {
         style={styles.pressable}
         onPress={() => nav.navigate('History')}
         android_ripple={{
-          color: switchColors(LightColors.primary300, DarkColors.text),
+          color: switchValues(LightColors.primary300, DarkColors.text),
         }}
       >
         <CenteredText>
