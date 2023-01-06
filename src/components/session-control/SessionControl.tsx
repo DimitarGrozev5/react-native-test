@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 
 import ActiveSession from './session-views/ActiveSession';
 import InactiveSession from './session-views/InavtiveSession';
@@ -8,10 +8,10 @@ import TodayOverview from './session-views/TodayOverview';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import { observer } from 'mobx-react-lite';
 import { Seconds } from '../../model/util-types';
-import { useDevicePosition } from './session-views/useDevicePosition';
 import CenteredText from '../views/CenteredText';
 import AccentText from '../views/AccentText';
 import { useSessionTimer } from './hooks/useSessionTimer';
+import { useAutoStart } from './hooks/useAutoStart';
 
 const SessionControl = observer(() => {
   // Get values from store
@@ -21,13 +21,6 @@ const SessionControl = observer(() => {
 
   // Get state for the component
   const sessionState = useSessionTimer(activeSession, goals, today);
-
-  // Helper values, for controlling auto start and stop
-  const [requestedAutoStart, setRequestedAutoStart] = useState(false);
-  const [startedAutoStart, setStartedAutoStart] = useState(false);
-
-  // Get the device orientation
-  const downOrUp = useDevicePosition();
 
   /// Handler functions
   // Stop the active session
@@ -55,31 +48,9 @@ const SessionControl = observer(() => {
     activeSession.setStartedAt(now);
   }, [activeSession]);
 
-  // Start listening for auto start
-  const startWithGesturesHandler = () => {
-    setRequestedAutoStart(true);
-  };
-
-  // Auto start and stop, based on device orientation
-  useEffect(() => {
-    if (requestedAutoStart) {
-      if (downOrUp === 'down' && !startedAutoStart) {
-        startSessionHandler();
-        setStartedAutoStart(true);
-      }
-      if (downOrUp === 'up' && startedAutoStart) {
-        stopSessionHandler();
-        setRequestedAutoStart(false);
-        setStartedAutoStart(false);
-      }
-    }
-  }, [
-    downOrUp,
-    requestedAutoStart,
-    startSessionHandler,
-    startedAutoStart,
-    stopSessionHandler,
-  ]);
+  // Auto start handling
+  const [requestedAutoStart, startedAutoStart, startWithGesturesHandler] =
+    useAutoStart(startSessionHandler, stopSessionHandler);
 
   if (sessionState.active) {
     return (
