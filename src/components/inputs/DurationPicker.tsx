@@ -1,11 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import {
   DarkColors,
   LightColors,
@@ -21,34 +15,27 @@ type Props = {
 };
 
 const DurationPicker: React.FC<Props> = ({ onChange }) => {
-  // Set display values for h,m,s
+  // Set values for h,m,s
   const [h, setH] = useState(0);
   const [m, setM] = useState(0);
   const [s, setS] = useState(0);
 
-  // When display values change, update onChange handler
+  // When values change, update onChange handler
   useEffect(() => {
     onChange(Number(h) * 3600 + Number(m) * 60 + Number(s));
   }, [h, m, s, onChange]);
-
-  const { toggle } = useDarkModeStyle();
 
   const changeHandler = (setter: typeof setH) => (index: number) => {
     setter(index);
   };
 
+  // Handle Dark Mode
+  const { toggle } = useDarkModeStyle();
+
   return (
     <View style={[styles.container, toggle(styles.containerDark)]}>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          {/* <TextInput
-            value={h}
-            onChange={handleChange(setH)}
-            onBlur={blurHandler}
-            style={[styles.textInput, toggle(styles.textInputDark)]}
-            cursorColor={LightColors.primary700}
-            keyboardType="numeric"
-          /> */}
           <ScrollableSelect
             values={Array(24)
               .fill('')
@@ -62,13 +49,6 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          {/* <ControllableTextInput
-            value={m}
-            onChange={handleChange(setM)}
-            onBlur={blurHandler}
-            style={[styles.textInput, toggle(styles.textInputDark)]}
-            cursorColor={LightColors.primary700}
-          /> */}
           <ScrollableSelect
             values={Array(60)
               .fill('')
@@ -82,13 +62,6 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          {/* <ControllableTextInput
-            value={s}
-            onChange={handleChange(setS)}
-            onBlur={blurHandler}
-            style={[styles.textInput, toggle(styles.textInputDark)]}
-            cursorColor={LightColors.primary700}
-          /> */}
           <ScrollableSelect
             values={Array(60)
               .fill('')
