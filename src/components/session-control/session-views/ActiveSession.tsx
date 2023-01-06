@@ -27,16 +27,20 @@ const ActiveSession: React.FC<Props> = ({
   stopSessionHandler,
   wrongTimeHandler,
 }) => {
+  // State and handlers for the Modal
   const [showModal, setShowModal] = useState(false);
-
   const [realTime, setRealTime] = useState<Seconds>(0);
 
   const showModalHandler = () => setShowModal(true);
+
   const submitWrongTimeHandler = useCallback(() => {
     wrongTimeHandler(realTime);
     setShowModal(false);
   }, [realTime, wrongTimeHandler]);
+
+  // Toggle dark mode
   const { toggle } = useDarkModeStyle();
+
   return (
     <>
       <StyledButton onPress={stopSessionHandler}>Stop Extension</StyledButton>
@@ -56,8 +60,10 @@ const ActiveSession: React.FC<Props> = ({
       </StyledButton>
 
       <Modal visible={showModal} animationType="slide">
-        <View style={[styles.modalContainer, toggle(styles.modalContainerDark)]}>
-          <Card style={{ height: '40%', minHeight: 350 }}>
+        <View
+          style={[styles.modalContainer, toggle(styles.modalContainerDark)]}
+        >
+          <Card style={[styles.modalCard]}>
             <View style={styles.modalContent}>
               <CenteredText style={{ fontSize: 18 }}>
                 <AccentText>Set actual time</AccentText>
@@ -99,6 +105,7 @@ const styles = StyleSheet.create({
   modalContent: {
     flex: 1,
   },
+  modalCard: { height: '40%', minHeight: 350 },
   modalButtons: {
     flexDirection: 'row',
   },

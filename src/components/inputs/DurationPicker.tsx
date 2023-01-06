@@ -12,10 +12,7 @@ import {
   useDarkModeStyle,
 } from '../../global-styling';
 import { Seconds } from '../../model/util-types';
-import { getHMS } from '../../util/getHMS';
-import { leadingZeroes } from '../../util/leading-zeroes';
 import AccentText from '../views/AccentText';
-import ControllableTextInput from './ControllableTextInput';
 import ScrollableSelect from './ScrollableSelect';
 
 type Props = {
@@ -23,7 +20,7 @@ type Props = {
   onChange: (time: Seconds) => void;
 };
 
-const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
+const DurationPicker: React.FC<Props> = ({ onChange }) => {
   // Set display values for h,m,s
   const [h, setH] = useState(0);
   const [m, setM] = useState(0);
