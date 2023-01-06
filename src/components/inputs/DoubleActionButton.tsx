@@ -21,11 +21,11 @@ const DoubleActionButton: React.FC<Props> = ({
   onPressInner,
   style,
 }) => {
-  const { pick, switchValues } = useDarkModeStyle();
+  const { toggle, switchValues } = useDarkModeStyle();
   return (
     <View style={[style, styles.container]}>
       <Pressable
-        style={[styles.pressable, pick(styles.pressableDark)]}
+        style={[styles.pressable, toggle(styles.pressableDark)]}
         onPress={onPressBoth}
         android_ripple={{
           color: switchValues(LightColors.primary700, DarkColors.text),
@@ -38,10 +38,10 @@ const DoubleActionButton: React.FC<Props> = ({
             color: switchValues(LightColors.primary700, DarkColors.text),
           }}
         >
-          <Text style={[styles.textLeft, pick(styles.textDark)]}>{text1}</Text>
+          <Text style={[styles.textLeft, toggle(styles.textDark)]}>{text1}</Text>
         </Pressable>
-        <View style={[styles.rightButton, pick(styles.rightButtonDark)]}>
-          <Text style={[styles.textRight, pick(styles.textDark)]}>{text2}</Text>
+        <View style={[styles.rightButton, toggle(styles.rightButtonDark)]}>
+          <Text style={[styles.textRight, toggle(styles.textDark)]}>{text2}</Text>
         </View>
       </Pressable>
     </View>

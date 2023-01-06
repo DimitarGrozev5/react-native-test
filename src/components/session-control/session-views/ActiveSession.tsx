@@ -36,7 +36,7 @@ const ActiveSession: React.FC<Props> = ({
     wrongTimeHandler(realTime);
     setShowModal(false);
   }, [realTime, wrongTimeHandler]);
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
     <>
       <StyledButton onPress={stopSessionHandler}>Stop Extension</StyledButton>
@@ -56,7 +56,7 @@ const ActiveSession: React.FC<Props> = ({
       </StyledButton>
 
       <Modal visible={showModal} animationType="slide">
-        <View style={[styles.modalContainer, pick(styles.modalContainerDark)]}>
+        <View style={[styles.modalContainer, toggle(styles.modalContainerDark)]}>
           <Card style={{ height: '40%', minHeight: 350 }}>
             <View style={styles.modalContent}>
               <CenteredText style={{ fontSize: 18 }}>

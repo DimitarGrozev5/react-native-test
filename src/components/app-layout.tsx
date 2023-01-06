@@ -7,10 +7,10 @@ import { DarkColors, LightColors, useDarkModeStyle } from '../global-styling';
 type Props = React.PropsWithChildren;
 
 const AppLayout: React.FC<Props> = ({ children }) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
     <KeyboardAvoidingView behavior="height" style={styles.screen}>
-      <View style={[styles.container, pick(styles.containerDark)]}>
+      <View style={[styles.container, toggle(styles.containerDark)]}>
         <StatusBar style="dark" />
         {children}
       </View>

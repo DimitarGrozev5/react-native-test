@@ -34,21 +34,21 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
     onChange(Number(h) * 3600 + Number(m) * 60 + Number(s));
   }, [h, m, s, onChange]);
 
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
 
   const changeHandler = (setter: typeof setH) => (index: number) => {
     setter(index);
   };
 
   return (
-    <View style={[styles.container, pick(styles.containerDark)]}>
+    <View style={[styles.container, toggle(styles.containerDark)]}>
       <View style={styles.inputContainer}>
-        <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
+        <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           {/* <TextInput
             value={h}
             onChange={handleChange(setH)}
             onBlur={blurHandler}
-            style={[styles.textInput, pick(styles.textInputDark)]}
+            style={[styles.textInput, toggle(styles.textInputDark)]}
             cursorColor={LightColors.primary700}
             keyboardType="numeric"
           /> */}
@@ -64,12 +64,12 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
         </View>
       </View>
       <View style={styles.inputContainer}>
-        <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
+        <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           {/* <ControllableTextInput
             value={m}
             onChange={handleChange(setM)}
             onBlur={blurHandler}
-            style={[styles.textInput, pick(styles.textInputDark)]}
+            style={[styles.textInput, toggle(styles.textInputDark)]}
             cursorColor={LightColors.primary700}
           /> */}
           <ScrollableSelect
@@ -84,12 +84,12 @@ const DurationPicker: React.FC<Props> = ({ value, onChange }) => {
         </View>
       </View>
       <View style={styles.inputContainer}>
-        <View style={[styles.inputBox, pick(styles.inputBoxDark)]}>
+        <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           {/* <ControllableTextInput
             value={s}
             onChange={handleChange(setS)}
             onBlur={blurHandler}
-            style={[styles.textInput, pick(styles.textInputDark)]}
+            style={[styles.textInput, toggle(styles.textInputDark)]}
             cursorColor={LightColors.primary700}
           /> */}
           <ScrollableSelect

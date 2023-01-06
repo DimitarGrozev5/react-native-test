@@ -25,14 +25,14 @@ const Card: React.FC<Props> = ({
   centered = true,
   onLayout = () => {},
 }) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   const isPortrait = useOrientation() === 'portrait';
   return (
     <View
       style={[
         styles.container,
         isPortrait ? styles.containerPortrait : {},
-        pick(styles.containerDark),
+        toggle(styles.containerDark),
         expand ? styles.expand : {},
         centered ? styles.centeredContent : {},
         style,

@@ -9,9 +9,9 @@ import {
 type Props = React.PropsWithChildren;
 
 const AccentText: React.FC<Props> = ({ children }) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
-    <Text style={[styles.accentText, pick(styles.accentTextDark)]}>
+    <Text style={[styles.accentText, toggle(styles.accentTextDark)]}>
       {children}
     </Text>
   );

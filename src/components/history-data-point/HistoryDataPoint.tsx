@@ -15,9 +15,9 @@ type Props = {
 };
 
 const HistoryDataPoint = ({ data, max }: Props) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
-    <View style={[styles.container, pick(styles.containerDark)]}>
+    <View style={[styles.container, toggle(styles.containerDark)]}>
       <View style={[styles.dataRow]}>
         <View style={[styles.textData]}></View>
         <View style={[styles.graphData]}>
@@ -27,7 +27,7 @@ const HistoryDataPoint = ({ data, max }: Props) => {
 
       <View style={[styles.dataRow]}>
         <View style={[styles.textData]}>
-          <Text style={[styles.textDataLabel, pick(styles.textDataLabelDark)]}>
+          <Text style={[styles.textDataLabel, toggle(styles.textDataLabelDark)]}>
             {formatTime(data.item.goal)}
           </Text>
         </View>
@@ -38,7 +38,7 @@ const HistoryDataPoint = ({ data, max }: Props) => {
 
       <View style={[styles.dataRow]}>
         <View style={[styles.textData]}>
-          <Text style={[styles.textDataLabel, pick(styles.textDataLabelDark)]}>
+          <Text style={[styles.textDataLabel, toggle(styles.textDataLabelDark)]}>
             {formatTime(data.item.achieved)}
           </Text>
         </View>
@@ -57,15 +57,15 @@ const DataBar = ({
   width: number;
   type: 'goal' | 'achieved';
 }) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
     <View
       style={[
         styles.dataBar,
         type === 'goal' ? styles.goalStyle : styles.achievementStyle,
         type === 'goal'
-          ? pick(styles.goalStyleDark)
-          : pick(styles.achievementStyleDark),
+          ? toggle(styles.goalStyleDark)
+          : toggle(styles.achievementStyleDark),
         { width: `${width * 100}%` },
       ]}
     >
@@ -73,8 +73,8 @@ const DataBar = ({
         style={[
           type === 'goal' ? styles.goalTextStyle : styles.achievedTextStyle,
           type === 'goal'
-            ? pick(styles.goalTextStyleDark)
-            : pick(styles.achievedTextStyleDark),
+            ? toggle(styles.goalTextStyleDark)
+            : toggle(styles.achievedTextStyleDark),
         ]}
         numberOfLines={1}
       >

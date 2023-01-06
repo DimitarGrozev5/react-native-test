@@ -39,7 +39,7 @@ const DataOverview = () => {
     [last7days, max]
   );
 
-  const { pick, switchValues } = useDarkModeStyle();
+  const { toggle, switchValues } = useDarkModeStyle();
 
   const isLandscape = useOrientation() === 'landscape';
   const { height } = useWindowDimensions();
@@ -60,7 +60,7 @@ const DataOverview = () => {
         <CenteredText>
           <AccentText>Last 7 Days</AccentText>
         </CenteredText>
-        <View style={[styles.graphContainer, pick(styles.graphContainerDark)]}>
+        <View style={[styles.graphContainer, toggle(styles.graphContainerDark)]}>
           {scaled7days.map((day) => (
             <DataBar
               key={day.date.join(',')}

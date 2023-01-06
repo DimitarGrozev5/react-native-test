@@ -13,7 +13,7 @@ type Props = {
 };
 
 const VerticalDataPoint = ({ data, max }: Props) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   if (data.item.type === 'achivement') {
     return (
       <>
@@ -21,7 +21,7 @@ const VerticalDataPoint = ({ data, max }: Props) => {
           style={[
             styles.dataBar,
             styles.goalStyle,
-            pick(styles.goalStyleDark),
+            toggle(styles.goalStyleDark),
             { height: `${(data.item.data.goal / max) * 100}%` },
           ]}
         ></View>
@@ -29,7 +29,7 @@ const VerticalDataPoint = ({ data, max }: Props) => {
           style={[
             styles.dataBar,
             styles.achievementStyle,
-            pick(styles.achievementStyleDark),
+            toggle(styles.achievementStyleDark),
             { height: `${(data.item.data.achieved / max) * 100}%` },
           ]}
         ></View>
@@ -40,7 +40,7 @@ const VerticalDataPoint = ({ data, max }: Props) => {
   return (
     <View style={styles.dateContainer}>
       <View style={styles.dateRotated}>
-        <Text style={[styles.dateText, pick(styles.dateTextDark)]}>
+        <Text style={[styles.dateText, toggle(styles.dateTextDark)]}>
           {data.item.data}
         </Text>
       </View>

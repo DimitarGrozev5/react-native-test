@@ -19,13 +19,13 @@ const StyledButton: React.FC<Props> = ({
   style,
   plain = false,
 }) => {
-  const { pick, switchValues } = useDarkModeStyle();
+  const { toggle, switchValues } = useDarkModeStyle();
   return (
     <View style={[style, styles.container, plain ? styles.plainContainer : {}]}>
       <Pressable
         style={[
           styles.pressable,
-          pick(styles.pressableDark),
+          toggle(styles.pressableDark),
           plain ? styles.plainPressable : {},
         ]}
         onPress={onPress}
@@ -36,9 +36,9 @@ const StyledButton: React.FC<Props> = ({
         <Text
           style={[
             styles.text,
-            pick(styles.textDark),
+            toggle(styles.textDark),
             plain ? styles.plainText : {},
-            plain ? pick(styles.plainTextDark) : {},
+            plain ? toggle(styles.plainTextDark) : {},
           ]}
         >
           {children}

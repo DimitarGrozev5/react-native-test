@@ -5,9 +5,9 @@ import { DarkColors, useDarkModeStyle } from '../../global-styling';
 type Props = React.PropsWithChildren & { style?: TextStyle | TextStyle[] };
 
 const CenteredText: React.FC<Props> = ({ children, style = {} }) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
-    <Text style={[style, styles.centeredText, pick(styles.dark)]}>
+    <Text style={[style, styles.centeredText, toggle(styles.dark)]}>
       {children}
     </Text>
   );

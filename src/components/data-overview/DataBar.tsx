@@ -14,14 +14,14 @@ type DataBarProps = {
 const p = (n: number) => `${n * 100}%`;
 
 const DataBar: React.FC<DataBarProps> = ({ goal, achieved }) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
     <View style={styles.dataBarContainer}>
       <View
         style={[
           styles.dataBar,
           styles.goalBar,
-          pick(styles.goalBarDark),
+          toggle(styles.goalBarDark),
           { height: p(goal) },
         ]}
       ></View>
@@ -29,7 +29,7 @@ const DataBar: React.FC<DataBarProps> = ({ goal, achieved }) => {
         style={[
           styles.dataBar,
           styles.achievedBar,
-          pick(styles.achievedBarDark),
+          toggle(styles.achievedBarDark),
           { height: p(achieved) },
         ]}
       ></View>

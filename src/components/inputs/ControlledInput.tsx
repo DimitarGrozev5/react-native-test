@@ -46,7 +46,7 @@ const ControlledInput = <T extends FieldValues>({
   placeholder = '',
   label = '',
 }: Props<T>) => {
-  const { pick } = useDarkModeStyle();
+  const { toggle } = useDarkModeStyle();
   return (
     <View style={styles.container}>
       {!!label && <AccentText>{label}</AccentText>}
@@ -57,7 +57,7 @@ const ControlledInput = <T extends FieldValues>({
           <TextInput
             style={[
               styles.input,
-              pick(styles.inputDark),
+              toggle(styles.inputDark),
               inputStyle,
               errors ? styles.inputError : {},
             ]}
