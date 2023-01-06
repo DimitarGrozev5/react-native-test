@@ -20,6 +20,8 @@
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-empty-function": "off",
     "no-empty": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off"
   }
 }

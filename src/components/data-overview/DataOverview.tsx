@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useMemo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import { ScreenNavigation } from '../../../App';
+import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import {
   DarkColors,
   LightColors,
   useDarkModeStyle,
 } from '../../global-styling';
+import { useOrientation } from '../../hooks/useOrientation';
 import { DailyAchievement } from '../../model/db/db';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import AccentText from '../views/AccentText';
@@ -15,7 +15,7 @@ import CenteredText from '../views/CenteredText';
 import DataBar from './DataBar';
 
 const DataOverview = () => {
-  const nav = useNavigation<ScreenNavigation>();
+  const nav = useNavigation();
 
   const last7days = useDBStore('achieved').last7days;
 
@@ -41,8 +41,15 @@ const DataOverview = () => {
 
   const { pick, switchColors } = useDarkModeStyle();
 
+  const isLandscape = useOrientation() === 'landscape';
+  const { height } = useWindowDimensions();
+
   return (
-    <Card header="Previous Days" expand>
+    <Card
+      header="Previous Days"
+      expand
+      style={isLandscape ? { width: '100%', height: height - 120 } : {}}
+    >
       <Pressable
         style={styles.pressable}
         onPress={() => nav.navigate('History')}

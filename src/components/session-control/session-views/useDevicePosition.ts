@@ -2,7 +2,7 @@ import { Accelerometer } from 'expo-sensors';
 import { Subscription } from 'expo-sensors/build/DeviceSensor';
 import { useCallback, useEffect, useState } from 'react';
 
-export const useOrientation = (): 'down' | 'up' => {
+export const useDevicePosition = (): 'down' | 'up' => {
   const [pos, setPos] = useState<'down' | 'up'>('up');
   const [{ x, y, z }, setData] = useState({
     x: 0,

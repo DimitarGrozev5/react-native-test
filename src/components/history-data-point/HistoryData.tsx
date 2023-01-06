@@ -1,12 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { DailyAchievement } from '../../model/db/db';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import Card from '../views/Card';
 import HistoryDataPoint from './HistoryDataPoint';
 import VerticalDataPoint from './VerticalDataPoint';
+import { useOrientation } from '../../hooks/useOrientation';
 
 export type VerticalData =
   | { type: 'date'; data: string }
@@ -50,7 +51,10 @@ const HistoryData = () => {
       }),
     [sortedHistoryData]
   );
-  return (
+
+  const isPortrait = useOrientation() === 'portrait';
+
+  const content = (
     <>
       <Card style={{ flex: 1 }}>
         <FlatList
@@ -72,6 +76,13 @@ const HistoryData = () => {
       </Card>
     </>
   );
+
+  return (
+    <>
+      {isPortrait && content}
+      {!isPortrait && <View style={styles.portraitContainer}>{content}</View>}
+    </>
+  );
 };
 
 export default observer(HistoryData);
@@ -80,4 +91,5 @@ const styles = StyleSheet.create({
   horizontalList: {
     flex: 1,
   },
+  portraitContainer: { flex: 1, flexDirection: 'row' },
 });

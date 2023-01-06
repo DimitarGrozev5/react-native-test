@@ -15,44 +15,34 @@ import { LightColors } from '../global-styling';
 import WebView from 'react-native-webview';
 import StyledButton from '../components/inputs/Button';
 import { useNavigation } from '@react-navigation/native';
-
-const center = (res: BarCodeScanningResult) => {
-  const [sumX, sumY] = res.cornerPoints.reduce(
-    ([sX, sY], pt) => {
-      return [sX + pt.x, sY + pt.y];
-    },
-    [0, 0]
-  );
-
-  return { x: sumX / 4, y: sumY / 4 };
-};
-
-const dist = (res: BarCodeScanningResult) => {
-  return Math.max(
-    Math.sqrt(
-      (res.cornerPoints[0].x - res.cornerPoints[1].x) ** 2 +
-        (res.cornerPoints[0].y - res.cornerPoints[1].y) ** 2
-    ),
-    Math.sqrt(
-      (res.cornerPoints[0].x - res.cornerPoints[3].x) ** 2 +
-        (res.cornerPoints[0].y - res.cornerPoints[3].y) ** 2
-    )
-  );
-};
+import { useOrientation } from '../hooks/useOrientation';
+import { center, dist, orient } from '../util/transformation-utils';
 
 const ViewScreen = () => {
+  const isPortrait = useOrientation() === 'portrait';
+
   // Setup camera size
   const [cameraSize, setCameraSize] = useState({ w: 0, h: 0 });
   const layoutChangeHandler = (e: LayoutChangeEvent) => {
-    let width = e.nativeEvent.layout.width - 30;
-    let height = Math.round((width * 16) / 9);
+    if (isPortrait) {
+      let width = e.nativeEvent.layout.width - 30;
+      let height = Math.round((width * 16) / 9);
 
-    if (height > e.nativeEvent.layout.height) {
-      height = e.nativeEvent.layout.height - 30;
-      width = Math.round((height * 9) / 16);
+      if (height > e.nativeEvent.layout.height) {
+        height = e.nativeEvent.layout.height - 30;
+        width = Math.round((height * 9) / 16);
+      }
+      setCameraSize({ w: width, h: height });
+    } else {
+      let width = e.nativeEvent.layout.width - 30;
+      let height = Math.round((width * 9) / 16);
+
+      if (height > e.nativeEvent.layout.height) {
+        height = e.nativeEvent.layout.height - 30;
+        width = Math.round((height * 16) / 9);
+      }
+      setCameraSize({ w: width, h: height });
     }
-
-    setCameraSize({ w: width, h: height });
   };
 
   const [cameraPermission, requestCameraPermission] =
@@ -73,7 +63,7 @@ const ViewScreen = () => {
     // Camera permissions are not granted yet
     return (
       <AppLayout>
-        <Card>
+        <Card style={{ width: '100%' }}>
           <Text style={{ textAlign: 'center' }}>
             We need your permission to show the camera
           </Text>
@@ -95,9 +85,9 @@ const ViewScreen = () => {
 
   return (
     <AppLayout>
-      <Card expand onLayout={layoutChangeHandler}>
+      <Card expand onLayout={layoutChangeHandler} style={{ width: '100%' }}>
         <Camera
-          ratio="16:9"
+          ratio={isPortrait ? '16:9' : '9:16'}
           style={[
             {
               height: cameraSize.h,
@@ -133,12 +123,7 @@ const ViewScreen = () => {
                     { translateX: center(scanResult).x - 250 },
                     { translateY: center(scanResult).y - 250 },
                     {
-                      rotate: `${Math.atan2(
-                        scanResult.cornerPoints[1].y -
-                          scanResult.cornerPoints[2].y,
-                        scanResult.cornerPoints[1].x -
-                          scanResult.cornerPoints[2].x
-                      )}rad`,
+                      rotate: `${orient(scanResult)}rad`,
                     },
                     {
                       scale: dist(scanResult) / 500,

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useWindowDimensions } from 'react-native';
+import { useOrientation } from '../../../hooks/useOrientation';
 import { DailyAchievement } from '../../../model/db/db';
 import { formatTime } from '../../../util/format-time';
 import AccentText from '../../views/AccentText';
@@ -18,8 +20,15 @@ const TodayOverview: React.FC<Props> = ({
   const spent = today.achieved;
   const goal = today.goal;
 
+  const isLandscape = useOrientation() === 'landscape';
+  const { height } = useWindowDimensions();
+
   return (
-    <Card header="What's happening today" expand={!sessionIsActive}>
+    <Card
+      header="What's happening today"
+      expand={!sessionIsActive}
+      style={isLandscape ? { width: '50%', height: height - 100 } : {}}
+    >
       <CenteredText>
         You have spent <AccentText>{formatTime(spent)}s</AccentText> in
         extension

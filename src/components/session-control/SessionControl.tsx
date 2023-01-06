@@ -9,7 +9,7 @@ import TodayOverview from './session-views/TodayOverview';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import { observer } from 'mobx-react-lite';
 import { Seconds } from '../../model/util-types';
-import { useOrientation } from './session-views/useOrientation';
+import { useDevicePosition } from './session-views/useDevicePosition';
 import CenteredText from '../views/CenteredText';
 import AccentText from '../views/AccentText';
 
@@ -29,7 +29,7 @@ const SessionControl = observer(() => {
   const [startedAutoStart, setStartedAutoStart] = useState(false);
 
   // Get the device orientation
-  const downOrUp = useOrientation();
+  const downOrUp = useDevicePosition();
 
   // Setup timer
   useEffect(() => {

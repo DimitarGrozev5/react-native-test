@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { useOrientation } from '../../hooks/useOrientation';
 import { Seconds } from '../../model/util-types';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import { formatTime } from '../../util/format-time';
@@ -26,8 +27,15 @@ const GoalControl = () => {
     setViewMode('view');
   };
 
+  const isLandscape = useOrientation() === 'landscape';
+  const { height } = useWindowDimensions();
+
   return (
-    <Card header="Managing your goals" expand={viewMode === 'view'}>
+    <Card
+      header="Managing your goals"
+      expand={viewMode === 'view'}
+      style={isLandscape ? { width: '50%', height: height - 100 } : {}}
+    >
       <CenteredText>
         Your current goal is{' '}
         <AccentText>{formatTime(goals.currentDailyGoal)}s</AccentText>

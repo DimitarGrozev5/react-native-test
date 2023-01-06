@@ -1,10 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { ScrollView } from 'react-native-gesture-handler';
 import AppLayout from '../components/app-layout';
 import StyledButton from '../components/inputs/Button';
 import ControlledInput from '../components/inputs/ControlledInput';
 import Card from '../components/views/Card';
 import CenteredText from '../components/views/CenteredText';
+import { useOrientation } from '../hooks/useOrientation';
 
 type FormData = {
   email: string;
@@ -30,15 +32,17 @@ const RegisterScreen = () => {
 
   const onSubmit = (data: FormData) => console.log(data);
 
-  return (
-    <AppLayout>
+  const isPortrait = useOrientation() === 'portrait';
+
+  const form = (
+    <>
       <Card>
         <CenteredText>
           Register an account to be able to backup and restore your data and to
           be able to sync other devices
         </CenteredText>
       </Card>
-      <Card header="Please input your data" centered={false}>
+      <Card header="Please input your data" style={{ width: '100%' }}>
         <ControlledInput
           control={control}
           name="email"
@@ -101,6 +105,13 @@ const RegisterScreen = () => {
         />
         <StyledButton onPress={handleSubmit(onSubmit)}>Submit</StyledButton>
       </Card>
+    </>
+  );
+
+  return (
+    <AppLayout>
+      {isPortrait && form}
+      {!isPortrait && <ScrollView style={{ width: '100%' }}>{form}</ScrollView>}
     </AppLayout>
   );
 };

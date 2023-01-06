@@ -5,6 +5,7 @@ import {
   LightColors,
   useDarkModeStyle,
 } from '../../global-styling';
+import { useOrientation } from '../../hooks/useOrientation';
 import AccentText from './AccentText';
 import CenteredText from './CenteredText';
 
@@ -25,10 +26,12 @@ const Card: React.FC<Props> = ({
   onLayout = () => {},
 }) => {
   const { pick } = useDarkModeStyle();
+  const isPortrait = useOrientation() === 'portrait';
   return (
     <View
       style={[
         styles.container,
+        isPortrait ? styles.containerPortrait : {},
         pick(styles.containerDark),
         expand ? styles.expand : {},
         centered ? styles.centeredContent : {},
@@ -50,12 +53,14 @@ export default Card;
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     paddingHorizontal: 16,
     paddingVertical: 8,
     margin: 8,
     backgroundColor: LightColors.primary500,
     elevation: 8,
+  },
+  containerPortrait: {
+    width: '100%',
   },
   containerDark: {
     backgroundColor: DarkColors.primary500,
