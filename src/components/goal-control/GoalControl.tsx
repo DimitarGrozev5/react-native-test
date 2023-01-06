@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { useOrientation } from '../../hooks/useOrientation';
+import { useOrientation } from '../../hooks/useIsPortrait';
 import { Seconds } from '../../model/util-types';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import { formatTime } from '../../util/format-time';

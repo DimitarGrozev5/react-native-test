@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
-import { useOrientation } from '../../../hooks/useOrientation';
+import { useOrientation } from '../../../hooks/useIsPortrait';
 import { DailyAchievement } from '../../../model/db/db';
 import { formatTime } from '../../../util/format-time';
 import AccentText from '../../views/AccentText';

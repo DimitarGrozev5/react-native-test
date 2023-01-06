@@ -6,7 +6,7 @@ import StyledButton from '../components/inputs/Button';
 import ControlledInput from '../components/inputs/ControlledInput';
 import Card from '../components/views/Card';
 import CenteredText from '../components/views/CenteredText';
-import { useOrientation } from '../hooks/useOrientation';
+import { useOrientation } from '../hooks/useIsPortrait';
 
 type FormData = {
   email: string;

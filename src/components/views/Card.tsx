@@ -5,7 +5,7 @@ import {
   LightColors,
   useDarkModeStyle,
 } from '../../global-styling';
-import { useOrientation } from '../../hooks/useOrientation';
+import { useOrientation } from '../../hooks/useIsPortrait';
 import AccentText from './AccentText';
 import CenteredText from './CenteredText';
 

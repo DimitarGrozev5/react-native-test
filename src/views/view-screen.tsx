@@ -15,7 +15,7 @@ import { LightColors } from '../global-styling';
 import WebView from 'react-native-webview';
 import StyledButton from '../components/inputs/Button';
 import { useNavigation } from '@react-navigation/native';
-import { useOrientation } from '../hooks/useOrientation';
+import { useOrientation } from '../hooks/useIsPortrait';
 import { center, dist, orient } from '../util/transformation-utils';
 
 const ViewScreen = () => {

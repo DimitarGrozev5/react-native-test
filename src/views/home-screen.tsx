@@ -5,12 +5,12 @@ import AppLayout from '../components/app-layout';
 import DataOverview from '../components/data-overview/DataOverview';
 import GoalControl from '../components/goal-control/GoalControl';
 import SessionControl from '../components/session-control/SessionControl';
-import { useOrientation } from '../hooks/useOrientation';
+import { useIsPortrait } from '../hooks/useIsPortrait';
 
 const HomeScreen = () => {
-  const orientation = useOrientation();
+  const isPortrait = useIsPortrait();
 
-  if (orientation === 'portrait') {
+  if (isPortrait) {
     return (
       <>
         <AppLayout>

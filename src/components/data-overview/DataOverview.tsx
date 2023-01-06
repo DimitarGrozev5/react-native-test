@@ -6,7 +6,7 @@ import {
   LightColors,
   useDarkModeStyle,
 } from '../../global-styling';
-import { useOrientation } from '../../hooks/useOrientation';
+import { useOrientation } from '../../hooks/useIsPortrait';
 import { DailyAchievement } from '../../model/db/db';
 import { useDBStore } from '../../store-mobx/db/useDBStore';
 import AccentText from '../views/AccentText';
