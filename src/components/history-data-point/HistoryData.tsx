@@ -7,7 +7,7 @@ import { useDBStore } from '../../store-mobx/db/useDBStore';
 import Card from '../views/Card';
 import HistoryDataPoint from './HistoryDataPoint';
 import VerticalDataPoint from './VerticalDataPoint';
-import { useOrientation } from '../../hooks/useIsPortrait';
+import { useIsPortrait } from '../../hooks/useIsPortrait';
 
 export type VerticalData =
   | { type: 'date'; data: string }
@@ -52,7 +52,7 @@ const HistoryData = () => {
     [sortedHistoryData]
   );
 
-  const isPortrait = useOrientation() === 'portrait';
+  const isPortrait = useIsPortrait();
 
   const content = (
     <>
