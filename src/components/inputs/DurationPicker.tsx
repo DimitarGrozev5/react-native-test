@@ -32,11 +32,14 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
   // Handle Dark Mode
   const { toggle } = useDarkModeStyle();
 
+  console.log(h);
+
   return (
     <View style={[styles.container, toggle(styles.containerDark)]}>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
+            value={h}
             values={Array(24)
               .fill('')
               .map((_, i) => i.toString())}
@@ -50,6 +53,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
+            value={m}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
@@ -63,6 +67,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
+            value={s}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
@@ -77,7 +82,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
   );
 };
 
-export default DurationPicker;
+export default React.memo(DurationPicker);
 
 const styles = StyleSheet.create({
   container: {

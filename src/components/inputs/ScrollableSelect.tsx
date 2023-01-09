@@ -12,18 +12,33 @@ import {
 import { LightColors } from '../../global-styling';
 
 type Props = {
+  value: number;
   values: string[];
   onChange: (index: number) => void;
 };
 
-const ScrollableSelect: React.FC<Props> = ({ values, onChange }) => {
+const ScrollableSelect: React.FC<Props> = ({ value, values, onChange }) => {
   const [textHeight, setTextHeight] = useState(10);
   const updateTextHeightHandler = (e: LayoutChangeEvent) => {
     setTextHeight(e.nativeEvent.layout.height);
   };
 
+  const [momentumLock, setMomentumLock] = useState(false);
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     onChange(Math.round(event.nativeEvent.contentOffset.y / textHeight));
+  };
+
+  // Controll scroll
+  const [ref, setRef] = useState<ScrollView | null>(null);
+  const updateScrollPosition = () => {
+    if (ref && !momentumLock) {
+      ref.scrollTo({
+        x: 0,
+        y: value * textHeight,
+        animated: true,
+      });
+    }
   };
 
   return (
@@ -36,6 +51,13 @@ const ScrollableSelect: React.FC<Props> = ({ values, onChange }) => {
         snapToOffsets={values.map((val, i) => i * textHeight)}
         onScroll={handleScroll}
         showsVerticalScrollIndicator={false}
+        ref={(ref) => {
+          setRef(ref);
+        }}
+        // onScrollBeginDrag={() => setLockOutsideControll(true)}
+        onScrollEndDrag={updateScrollPosition}
+        onMomentumScrollBegin={() => setMomentumLock(true)}
+        onMomentumScrollEnd={updateScrollPosition}
       >
         {['', ...values, ''].map((val, i) => (
           <Text
