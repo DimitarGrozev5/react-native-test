@@ -16,7 +16,7 @@ type Props = {
 
 const DurationPicker: React.FC<Props> = ({ onChange }) => {
   // Set values for h,m,s
-  const [h, setH] = useState(5);
+  const [h, setH] = useState(0);
   const [m, setM] = useState(0);
   const [s, setS] = useState(0);
 
@@ -37,7 +37,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
-            value={h}
+            index={h}
             values={Array(24)
               .fill('')
               .map((_, i) => i.toString())}
@@ -51,7 +51,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
-            value={m}
+            index={m}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
@@ -65,7 +65,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
-            value={s}
+            index={s}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}

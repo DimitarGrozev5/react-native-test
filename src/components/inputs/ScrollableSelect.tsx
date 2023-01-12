@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,45 +12,46 @@ import {
 import { LightColors } from '../../global-styling';
 
 type Props = {
-  value: number;
+  index: number;
   values: string[];
   onChange: (index: number) => void;
 };
 
-const ScrollableSelect: React.FC<Props> = ({ value, values, onChange }) => {
-  const [textHeight, setTextHeight] = useState(16);
+const getIndex = (offsetY: number, textHeight: number) =>
+  Math.round(offsetY / textHeight);
+
+const ScrollableSelect: React.FC<Props> = ({ index, values, onChange }) => {
+  const [textHeight, setTextHeight] = useState(48.380950927734375);
   const updateTextHeightHandler = (e: LayoutChangeEvent) => {
     setTextHeight(e.nativeEvent.layout.height);
   };
 
-  const [momentumLock, setMomentumLock] = useState(false);
+  const [internalIndex, setInternalIndex] = useState(-1);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    onChange(Math.round(event.nativeEvent.contentOffset.y / textHeight));
+    const newIndex = getIndex(event.nativeEvent.contentOffset.y, textHeight);
+    onChange(newIndex);
+    setInternalIndex(newIndex);
   };
 
   // Controll scroll
   const [ref, setRef] = useState<ScrollView | null>(null);
-  const updateScrollPosition = () => {
-    if (ref && !momentumLock) {
+  const updateScrollPosition = useCallback(() => {
+    if (ref) {
       ref.scrollTo({
         x: 0,
-        y: value * textHeight,
+        y: index * textHeight,
         animated: true,
       });
     }
-  };
-  const [initSet, setInitSet] = useState(0);
+  }, [index, ref, textHeight]);
+
   useEffect(() => {
-    if (ref && initSet < 20) {
-      setInitSet((st) => st + 1);
-      ref.scrollTo({
-        x: 0,
-        y: value * textHeight,
-        animated: true,
-      });
+    if (index !== internalIndex && !!ref) {
+      updateScrollPosition();
+      setInternalIndex(index);
     }
-  }, [initSet, ref, textHeight, value]);
+  }, [index, internalIndex, ref, textHeight, updateScrollPosition]);
 
   return (
     <View>
@@ -65,10 +66,6 @@ const ScrollableSelect: React.FC<Props> = ({ value, values, onChange }) => {
         ref={(ref) => {
           setRef(ref);
         }}
-        // onScrollBeginDrag={() => setLockOutsideControll(true)}
-        onScrollEndDrag={updateScrollPosition}
-        onMomentumScrollBegin={() => setMomentumLock(true)}
-        onMomentumScrollEnd={updateScrollPosition}
       >
         {['', ...values, ''].map((val, i) => (
           <Text
