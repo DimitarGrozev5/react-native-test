@@ -16,7 +16,7 @@ type Props = {
 
 const DurationPicker: React.FC<Props> = ({ onChange }) => {
   // Set values for h,m,s
-  const [h, setH] = useState(0);
+  const [h, setH] = useState(5);
   const [m, setM] = useState(0);
   const [s, setS] = useState(0);
 
@@ -31,8 +31,6 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
 
   // Handle Dark Mode
   const { toggle } = useDarkModeStyle();
-
-  console.log(h);
 
   return (
     <View style={[styles.container, toggle(styles.containerDark)]}>

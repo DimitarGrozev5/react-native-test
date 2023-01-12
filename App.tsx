@@ -19,6 +19,7 @@ import {
 import RegisterScreen from './src/views/register';
 import ViewScreen from './src/views/view-screen';
 import WebViewScreen from './src/views/web-view-screen';
+import NFCReader from './src/views/nfc-raader';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator();
@@ -65,8 +66,8 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Login"
-        component={HomeScreen}
+        name="NFC"
+        component={NFCReader}
         options={{
           drawerIcon: ({ color, size }) => (
             <Ionicons name="log-in" color={color} size={size} />

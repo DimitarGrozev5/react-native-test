@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const ScrollableSelect: React.FC<Props> = ({ value, values, onChange }) => {
-  const [textHeight, setTextHeight] = useState(10);
+  const [textHeight, setTextHeight] = useState(16);
   const updateTextHeightHandler = (e: LayoutChangeEvent) => {
     setTextHeight(e.nativeEvent.layout.height);
   };
@@ -40,6 +40,17 @@ const ScrollableSelect: React.FC<Props> = ({ value, values, onChange }) => {
       });
     }
   };
+  const [initSet, setInitSet] = useState(0);
+  useEffect(() => {
+    if (ref && initSet < 20) {
+      setInitSet((st) => st + 1);
+      ref.scrollTo({
+        x: 0,
+        y: value * textHeight,
+        animated: true,
+      });
+    }
+  }, [initSet, ref, textHeight, value]);
 
   return (
     <View>
