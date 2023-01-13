@@ -8,6 +8,7 @@ import {
 import { Seconds } from '../../model/util-types';
 import AccentText from '../views/AccentText';
 import ScrollableSelect from './ScrollableSelect';
+import ScrollableSelect_2 from './ScrollableSelect_2';
 
 type Props = {
   value: Seconds;
@@ -25,8 +26,8 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
     onChange(Number(h) * 3600 + Number(m) * 60 + Number(s));
   }, [h, m, s, onChange]);
 
-  const changeHandler = (setter: typeof setH) => (index: number) => {
-    setter(index);
+  const changeHandler = (setter: typeof setH) => (index: string) => {
+    setter(+index);
   };
 
   // Handle Dark Mode
@@ -37,7 +38,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
           <ScrollableSelect
-            index={h}
+            selectedValue={h.toString()}
             values={Array(24)
               .fill('')
               .map((_, i) => i.toString())}
@@ -50,12 +51,16 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          <ScrollableSelect
-            index={m}
+          <ScrollableSelect_2
+            selectedValue={m.toString()}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
-            onChange={changeHandler(setM)}
+            onChange={(val) => {
+              console.log(val);
+
+              // changeHandler(setM);
+            }}
           />
         </View>
         <View>
@@ -64,13 +69,13 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          <ScrollableSelect
-            index={s}
+          {/* <ScrollableSelect
+            selectedValue={s}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
             onChange={changeHandler(setS)}
-          />
+          /> */}
         </View>
         <View>
           <AccentText>s</AccentText>

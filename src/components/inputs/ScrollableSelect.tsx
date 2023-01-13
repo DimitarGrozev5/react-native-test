@@ -12,15 +12,22 @@ import {
 import { LightColors } from '../../global-styling';
 
 type Props = {
-  index: number;
+  selectedValue: string;
   values: string[];
-  onChange: (index: number) => void;
+  onChange: (index: string) => void;
 };
 
 const getIndex = (offsetY: number, textHeight: number) =>
   Math.round(offsetY / textHeight);
 
-const ScrollableSelect: React.FC<Props> = ({ index, values, onChange }) => {
+const ScrollableSelect: React.FC<Props> = ({
+  selectedValue,
+  values,
+  onChange,
+}) => {
+  const selectedIndex = values.indexOf(selectedValue);
+  // console.log(selectedIndex);
+
   const [textHeight, setTextHeight] = useState(48.380950927734375);
   const updateTextHeightHandler = (e: LayoutChangeEvent) => {
     setTextHeight(e.nativeEvent.layout.height);
@@ -30,7 +37,9 @@ const ScrollableSelect: React.FC<Props> = ({ index, values, onChange }) => {
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const newIndex = getIndex(event.nativeEvent.contentOffset.y, textHeight);
-    onChange(newIndex);
+    const newValue = values[newIndex];
+
+    onChange(newValue);
     setInternalIndex(newIndex);
   };
 
@@ -40,18 +49,18 @@ const ScrollableSelect: React.FC<Props> = ({ index, values, onChange }) => {
     if (ref) {
       ref.scrollTo({
         x: 0,
-        y: index * textHeight,
+        y: (selectedIndex + 1) * textHeight,
         animated: true,
       });
     }
-  }, [index, ref, textHeight]);
+  }, [selectedIndex, ref, textHeight]);
 
   useEffect(() => {
-    if (index !== internalIndex && !!ref) {
+    if (selectedIndex !== internalIndex && !!ref) {
       updateScrollPosition();
-      setInternalIndex(index);
+      setInternalIndex(selectedIndex);
     }
-  }, [index, internalIndex, ref, textHeight, updateScrollPosition]);
+  }, [selectedIndex, internalIndex, ref, textHeight, updateScrollPosition]);
 
   return (
     <View>
