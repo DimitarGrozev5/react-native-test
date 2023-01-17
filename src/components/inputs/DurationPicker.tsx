@@ -37,7 +37,7 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
     <View style={[styles.container, toggle(styles.containerDark)]}>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          <ScrollableSelect
+          <ScrollableSelect_2
             selectedValue={h.toString()}
             values={Array(24)
               .fill('')
@@ -57,9 +57,9 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
               .fill('')
               .map((_, i) => i.toString())}
             onChange={(val) => {
-              console.log(val);
+              // console.log(val);
 
-              // changeHandler(setM);
+              changeHandler(setM)(val);
             }}
           />
         </View>
@@ -69,13 +69,17 @@ const DurationPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={[styles.inputBox, toggle(styles.inputBoxDark)]}>
-          {/* <ScrollableSelect
-            selectedValue={s}
+          <ScrollableSelect_2
+            selectedValue={s.toString()}
             values={Array(60)
               .fill('')
               .map((_, i) => i.toString())}
-            onChange={changeHandler(setS)}
-          /> */}
+            onChange={(val) => {
+              // console.log(val);
+
+              changeHandler(setS)(val);
+            }}
+          />
         </View>
         <View>
           <AccentText>s</AccentText>

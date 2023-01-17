@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   NativeSyntheticEvent,
@@ -23,7 +23,7 @@ const ScrollableSelect_2: React.FC<Props> = ({
   values,
   onChange,
 }) => {
-  const selectedIndex = values.indexOf(selectedValue);
+  const [lockOutsideChange, setLockOutsideChange] = useState(false);
 
   const [touchStart, setTouchStart] = useState<null | {
     t: number;
@@ -32,7 +32,18 @@ const ScrollableSelect_2: React.FC<Props> = ({
     offset: number;
   }>(null);
 
-  const [scrollOffset, setScrollOffset] = useState(0);
+  const [scrollOffset, setScrollOffset] = useState(
+    -1 * values.indexOf(selectedValue) * valueHeightConst
+  );
+  useEffect(() => {
+    const selectedIndexOffset =
+      -1 * values.indexOf(selectedValue) * valueHeightConst;
+    // console.log(selectedIndexOffset, scrollOffset);
+
+    if (!lockOutsideChange && selectedIndexOffset !== scrollOffset) {
+      setScrollOffset(selectedIndexOffset);
+    }
+  }, [lockOutsideChange, scrollOffset, selectedValue, values]);
 
   const touchStartHandler = (e: NativeSyntheticEvent<NativeTouchEvent>) => {
     const t = new Date().getTime();
@@ -44,6 +55,7 @@ const ScrollableSelect_2: React.FC<Props> = ({
       y,
       offset: scrollOffset,
     });
+    setLockOutsideChange(true);
   };
 
   const touchMoveHandler = (e: NativeSyntheticEvent<NativeTouchEvent>) => {
@@ -54,12 +66,12 @@ const ScrollableSelect_2: React.FC<Props> = ({
 
       let baseOffset = touchStart.offset;
 
-      if (-1 * Math.round((touchStart.offset + dy) / valueHeightConst) < 0) {
+      const index =
+        -1 * Math.round((touchStart.offset + dy) / valueHeightConst);
+
+      if (index < 0) {
         baseOffset = touchStart.offset - values.length * valueHeightConst;
-      } else if (
-        -1 * Math.round((touchStart.offset + dy) / valueHeightConst) >=
-        values.length
-      ) {
+      } else if (index >= values.length) {
         baseOffset = touchStart.offset + values.length * valueHeightConst;
       }
 
@@ -77,11 +89,12 @@ const ScrollableSelect_2: React.FC<Props> = ({
     const finalSpeed = dy / dt;
 
     let index = -1 * Math.round(scrollOffset / valueHeightConst);
-    const duration = 500;
+    let duration = 300;
     let handler: (val: number) => void = setScrollOffset;
 
     if (touchStart) {
       if (Math.abs(finalSpeed) > 0.8) {
+        duration = 500;
         const run = finalSpeed * duration;
         index = -1 * Math.round((scrollOffset + run) / valueHeightConst);
 
@@ -105,11 +118,19 @@ const ScrollableSelect_2: React.FC<Props> = ({
         };
       }
 
+      const targetValue =
+        index < 0
+          ? values[index + values.length]
+          : values[index % values.length];
+
       animateState(
         scrollOffset,
         -1 * index * valueHeightConst,
         handler,
-        () => onChange(values[index/*  + selectedIndex */]),
+        () => {
+          onChange(targetValue);
+          setLockOutsideChange(false);
+        },
         duration
       );
       // onChange(values[index]);
@@ -133,7 +154,6 @@ const ScrollableSelect_2: React.FC<Props> = ({
           key={i}
           currentIndex={i}
           value={v}
-          selectedIndex={selectedIndex}
           scrollOffset={scrollOffset}
         />
       ))}
@@ -144,18 +164,15 @@ const ScrollableSelect_2: React.FC<Props> = ({
 type FloaterProps = {
   currentIndex: number;
   value: string;
-  selectedIndex: number;
   scrollOffset: number;
 };
 
 const FloaterComponent: React.FC<FloaterProps> = ({
   currentIndex,
   value,
-  selectedIndex,
   scrollOffset,
 }) => {
-  let offset =
-    58 + (currentIndex - selectedIndex - 2) * valueHeightConst + scrollOffset;
+  let offset = 58 + (currentIndex - 2) * valueHeightConst + scrollOffset;
 
   if (offset < -1 * valueHeightConst) {
     return null;

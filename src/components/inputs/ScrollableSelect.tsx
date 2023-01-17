@@ -26,7 +26,6 @@ const ScrollableSelect: React.FC<Props> = ({
   onChange,
 }) => {
   const selectedIndex = values.indexOf(selectedValue);
-  // console.log(selectedIndex);
 
   const [textHeight, setTextHeight] = useState(48.380950927734375);
   const updateTextHeightHandler = (e: LayoutChangeEvent) => {
@@ -68,7 +67,7 @@ const ScrollableSelect: React.FC<Props> = ({
         style={[styles.mask, styles.headerMask, { height: textHeight }]}
       ></View>
       <ScrollView
-        style={[styles.container, { height: textHeight * 3 }]}
+        style={[styles.container, { height: 150 }]}
         snapToOffsets={values.map((val, i) => i * textHeight)}
         onScroll={handleScroll}
         showsVerticalScrollIndicator={false}
